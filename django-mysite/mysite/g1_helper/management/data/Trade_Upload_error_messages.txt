@@ -1,0 +1,595 @@
+# TRADE UPLOAD ERROR MESSAGES
+# If ‘Y’ appears in the Posted column this indicates that the transaction would still be posted on Global One but that a warning message will also be shown on the Transactions Successfully Posted Report. Note that the messages relating to Credit Limits will appear on the Successfully Posted Report only if the System Parameter is set as a warning where this is applicable. If this parameter is set as an error then the new trade will be rejected and the message will appear on the Transaction Upload Error Report. The error code will also be included within the Trade Upload Confirmation File. Where ‘B’ appears in the Posted column this indicates the message can be shown both as a warning, if the trade or return has been posted and has no other errors, or as an error where the trade or return has not been posted. The error message will thus appear on either the Transaction Upload Error report or the Transactions Successfully Posted report, as applicable. The Message Status Indicator within the Trade Upload Confirmation file will show whether the message is an error or a warning.
+
+#|CODE|POSTED|DESCRIPTION|
+|AA||Invalid status code, must be N, C, A, U, D E or X|
+|AB||Invalid transaction type code, must be T, R, A, M, O, P, C, S or F|
+|AC||Invalid posting type|
+|AD||Missing Global One validation table|
+|AE||Counterparty code not on file|
+|AF||Counterparty is flagged as inactive|
+|AG||Invalid security code type|
+|AH||Warning: auto bulk failed as transaction is already bulked|
+|AI||Security cross reference code missing|
+|AJ||SEDOL code not on file|
+|AK||CUSIP code not on file|
+|AL||In-House cross reference not on file|
+|AM||Security code not on file|
+|AN||Invalid callable indicator, must be Y or N|
+|AO||Missing or invalid collateral type|
+|AP||Cancel Bulk Indicator must be A or R|
+|AQ||Invalid Own Counterparty Security Clearer Code|
+|AR||Quantity is a mandatory field|
+|AS||Currency code not on file|
+|AT||Cancellation of bulks only applicable to cancel or amend transactions|
+|AU||Either Loan Value or Price must be populated|
+|AV||Required Margin is mandatory|
+|AW||Interest Rate is mandatory|
+|AX|Y|Interest Rate is greater than the Warning Rate parameter |
+|AY|Y|Interest Rate is less than zero|
+|AZ||Counterparty is over its credit limit|
+|BA||Invalid Settlement Date|
+|BB||Security Settlement Mode is not on file|
+|BC||Invalid Cash Settlement Date|
+|BD||Cash Settlement Mode is not on file|
+|BE||Invalid DVP indicator; must be Y or N |
+|BF||Invalid Trade Date|
+|BG||Net Dividend percentage is greater than 999999999 or less than 0|
+|BH||Overseas Tax percentage is greater than 999999999 or less than 0|
+|BI||Domestic Tax percentage is greater than 999999999 or less than 0|
+|BJ||Invalid Interest Type|
+|BK||No cash value for Cash Wash collateral|
+|BL||Invalid Trade Category|
+|BM||Invalid Own Counterparty Cash Clearer Code|
+|BN||Missing Own Contract Reference|
+|BO||Invalid Counterparty Security Clearer Code|
+|BP||Invalid Counterparty Cash Clearer Code|
+|BQ||Minimum Fee must not be null|
+|BR||Invalid Euroclear Share Type|
+|BS||Collateral Margin contains a non-numeric value or decimals|
+|BT||Quantity and Value are equal to zero|
+|BU||DVP indicator missing from cash/cash pool trade|
+|BV||Re-allocations exist on this trade after the Return Security Settlement Date|
+|BW||Cash Date missing from cash/cash pool trade|
+|BX||Cash Date before trade date|
+|BY||Invalid Term Date|
+|BZ||Security Settlement Date before Trade Date|
+|CA||Term Date before Trade Date|
+|CB||Euroclear trade has no ISIN code|
+|CC|Y|Transaction successfully posted|
+|CD||Security Settlement Mode is mandatory|
+|CE||Cash Settlement Mode is mandatory|
+|CF||Major Counterparty is over its credit limit|
+|CG||Trade Return/Amendment has no Trade Reference|
+|CH||Trade not on file|
+|CI||Cancellation of bulk is only applicable for trades or returns|
+|CJ||Warning: Trade not bulked; cancellation of bulk aborted|
+|CK||Warning: Bulk must be status 1; cancellation of bulk aborted|
+|CL||Return/Reallocation Qty is > trade Qty less pending return Qty|
+|CM||Return value is greater than trade value less pending return value|
+|CN||Trade Date is prior to that of the original loan|
+|CO||Warning: only security bulk items may be cancelled|
+|CP||Trade locked by another user|
+|CQ||Pending returns outstanding|
+|CR||Cancellation of part settled loans/returns is prohibited|
+|CS||Auto record is a Trade, Global One trade is a Return|
+|CT||Auto record is a Return, Global One trade is a Trade|
+|CU||Agency Reference is mandatory|
+|CV||Warning: Bulk reference is invalid; cancellation of bulk aborted|
+|CW||Invalid Minimum Fee Currency |
+|CX||Missing Share Type table|
+|CY||Missing Interest Type table|
+|CZ||Missing Category table|
+|DA||Fund quantity allocation is not correct|
+|DB||Fund value allocation is not correct|
+|DC||Trade Category is mandatory |
+|DD||Trade is fully repaid|
+|DE||Trade/Return is cancelled|
+|DF||Trade is pending|
+|DG||Security Settlement Due Date is mandatory|
+|DH||Cash Settlement Due Date is mandatory|
+|DI||Split details are only applicable to new split transactions|
+|DJ||Cancel is not allowed on settled/part-settled trades or returns|
+|DK||Finder/LOC Bank Code is mandatory for a deliverable LOC|
+|DL||Fund/Cost Centre code does not exist|
+|DM||Fund/Cost Centre code is inactive|
+|DN||Fund/Cost Centre allocation has no Fund/Cost Centre code|
+|DO||The sum of the Fund/Cost Centre values does not match the loan value|
+|DP||The sum of the Fund/Cost Centre quantities does not match the loan qty|
+|DQ||Fund/Cost Centre allocation contains duplicates|
+|DR||Invalid Intercompany Cost Centre code|
+|DS||Invalid Mark Trade indicator|
+|DT||Trade Time contains non-numeric value|
+|DU||Invalid Matched Investment indicator|
+|DV||Invalid Trade Time|
+|DW||Fund/Cost Centre quantity is greater than trade allocation|
+|DX||Fund/Cost Centre value is greater than trade allocation|
+|DY||Intercompany trade is locked by another user|
+|DZ||Intercompany trade with pending affirmation|
+|EA||Intercompany trade with pending updates|
+|EB||Open file error to intercompany account(s)|
+|EC|Y|Warning: Counterparty over credit limit|
+|ED|Y|Warning: Counterparty Major over credit limit|
+|EE||Pending Intercompany trade is not fully affirmed|
+|EF||Invalid trade/collateral Fund Code|
+|EG||Invalid trade/collateral Fund cross reference|
+|EH||Security ISIN cross reference code not found|
+|EI||Return Quantity/Value is greater than Fund/Cost Centre allocation|
+|EJ||Security is locked by another user|
+|EK||Security is inactive|
+|EL||Unacceptable Collateral Class for Counterparty|
+|EM||Unacceptable Collateral Class for Own Counterparty|
+|EN||Invalid return Collateral Type|
+|EO||Invalid Contract Compare Dividend Tracking flag |
+|EP||Invalid Contract Compare Auto Mark flag|
+|EQ||Counterparty has negative availability|
+|ER||Custody Banks are incomplete|
+|ES||Warning: allocation not done from first Fund|
+|ET||Unable to fully allocate|
+|EU||Fund is over its credit limit|
+|EV||Fund is over the Counterparty credit limit|
+|EW||Fund is over the Counterparty Major credit limit|
+|EX||Fund Major is over its credit limit|
+|EY||Fund Major is over the Counterparty credit limit|
+|EZ||Fund Major is over the Counterparty Major credit limit|
+|FA||Fund General is over its credit limit|
+|FB||Fund General is over the Counterparty credit limit|
+|FC||Fund General is over the Counterparty Major credit limit|
+|FD||Allocation/Loan quantity is greater than Counterparty has available|
+|FE||Location/Fund not available|
+|FF||Re-allocations exist on this trade after return Cash Settlement Date|
+|FG||Allocation failed; multiple occurances of Location/Bank|
+|FH||Fund allocation quantity/value does not match loan quantity/ value|
+|FI|Y|Warning: Fund is over its credit limit|
+|FJ|Y|Warning: Fund is over the Counterparty credit limit|
+|FK|Y|Warning: Fund is over the Counterparty Major credit limit|
+|FL|Y|Warning: Fund major is over its credit limit|
+|FM|Y|Warning: Fund major is over the Counterparty credit limit|
+|FN|Y|Warning: Fund major is over the Counterparty Major credit limit|
+|FO|Y|Warning: Fund General is over its credit limit|
+|FP|Y|Warning: Fund General is over the Counterparty credit limit|
+|FQ|Y|Warning: Fund General is over the Counterparty Major credit limit|
+|FR||Invalid Collateral Type for Fund|
+|FS||Invalid Collateral Type for Fund Major|
+|FT||Invalid Issuer for Fund|
+|FU||Invalid Issuer for Fund Major|
+|FV||Fund is over Issuer limit|
+|FW||Fund Major is over Issuer limit|
+|FX|Y|Warning: Fund is over Issuer limit|
+|FY|Y|Warning: Fund Major is over Issuer limit|
+|FZ||No Funds to re-allocate|
+|GA||Re-allocation is only applicable with Lender or Cost Centre modules|
+|GB||Trade has pending returns; re-allocation is not allowed|
+|GC||Extended Quantity contains a non-numeric value or decimals|
+|GD||Extended Loan Price contains a non-numeric value or decimals|
+|GE||Invalid allocation or re-allocation type|
+|GF||Re-allocation ‘From’ Fund/Cost Centre qty/value does not match total allocation|
+|GG||Re-allocation ‘To’ Fund/Cost Centre qty/value does not match total reallocation |
+|GH||Invalid Re-allocation Effective Date; trade must be fully settled first|
+|GI||Re-allocations exist on this trade after Effective Date|
+|GJ||No valid settlement activity found; re-allocation failed|
+|GK||Re-allocation cannot be forward-dated|
+|GL||Recall allocation quantity does not match return quantity|
+|GM||Conflicting re-allocations exist on this trade in another entity|
+|GN||No ‘To’ Funds/Cost Centres for re-allocation|
+|GO||Re-allocation ‘From’ Fund/Location/Cost Centre does not exist on trade|
+|GP||Invalid return Fund/Location combination for trade|
+|GQ||Location Code does not exist|
+|GR||Available for future use|
+|GS||Available for future use|
+|GT||Available for future use|
+|GU||Available for future use|
+|GV||Available for future use|
+|GW||Available for future use|
+|GX||Available for future use|
+|GY||No re-allocation specified|
+|GZ||Allocation of quantity does not match re-allocation quantity|
+|HA||Re-allocation quantity is zero or does not match Fund quantities|
+|HB||Invalid Status or Transaction Type combination|
+|HC|Y|Warning: Cash Pool Margin value will not be used for settlements|
+|HD|Y|Warning: Auto Settlement failed due to incorrect settlement dates|
+|HE||Re-allocations exist on this trade after the return’s Trade Date|
+|HF|Y|Warning: Return will cause the cash pool to be negative|
+|HG||Amendment of Lender trade or return is prohibited|
+|HH||Amendment of Intercompany trade is prohibited|
+|HI||Amendment or cancellation of Repo trades is prohibited|
+|HJ||Invalid Collateral Class for Security|
+|HK||Error message received from Adaptiv (CRS) Interface|
+|HL||Invalid Return Update indicator|
+|HM||Invalid Cost Centre code for return|
+|HN||Return is fully settled|
+|HO||Part pending returns may not be amended|
+|HP||Invalid Auto-authorisation indicator|
+|HQ|Y|Warning: System or Counterparty is not set up for authorisation|
+|HR||Invalid Security Bulking indicator|
+|HS|Y|Warning: Auto bulk failed due to trade being locked by another user|
+|HT|Y|Warning: Auto bulk failed due to trade not being authorised|
+|HU||Warning: Upload return value does not match outstanding trade value|
+|HV||Record contains Application Defined Fields (ADFS) but none are defined|
+|HW|Y|Warning: Bulk Security, Due Date, Clearer, Agency, Major, Currency, DVP mismatch|
+|HX||Invalid Collateral Grouping code|
+|HY||Invalid Cash Wash Currency code|
+|HZ||Violations/Availability received from Adaptiv (CRS) Interface|
+|IA||Invalid operating system|
+|IB||Invalid Interface File Path|
+|IC||No trades found in this file path|
+|ID||Error: Failure to validate file records|
+|IE||Error: Acceptance file already exists|
+|IF||Cancellation of trade failed; dividend accruals exist|
+|IG||Length is invalid|
+|IH||Non-numeric|
+|II||Date is invalid |
+|IJ||Invalid Y/N toggle|
+|IK||Invalid table code|
+|IL||Has no decimal places|
+|IM||Invalid number of decimal places|
+|IN||Fund is over the Counterparty General credit limit|
+|IO||Fund Major is over the Counterparty General credit limit|
+|IP||Fund General is over the Counterparty General credit limit|
+|IQ|Y|Warning: Fund is over the Counterparty General credit limit|
+|IR|Y|Warning: Fund Major is over the Counterparty General credit limit|
+|IS|Y|Warning: Fund General is over the Counterparty General credit limit|
+|IT||Fund-level trades are not applicable on a broker system|
+|IU||Cost Centre trades are not applicable on a broker system|
+|IV||Cost Centre trades are not applicable on a lender system|
+|IW||Lender trades are not applicable on a Cost Centre system|
+|IX||Repo transaction can only be new trade |
+|IY||Invalid posting type for a Repo trade |
+|IZ||Term Date is mandatory for BUY/SEL posting types |
+|JA||Term Date is prior to the Security Settlement Date |
+|JB||Repo Trade Category is mandatory |
+|JC||Number of Application Defined Fields (ADFS) exceeds the maximum defined|
+|JD||Total coupon accrual is mandatory for BUY/SEL Repo trades|
+|JE||Reinvestment rate is mandatory for BUY/SEL Repo trades|
+|JF||Counterparty General is over its credit limit|
+|JG|Y|Warning: Counterparty General is over its credit limit|
+|JH||Maturity/Rollover is only valid for settled non-dollar Repo trades|
+|JI||Repo trade has been rolled; process this rollover first |
+|JJ||Repo Maturity indicator is already set|
+|JK||Open Repo already has a pending maturity|
+|JL||Rollovers are only valid for Term Repo trades |
+|JM||Repo BUY/SELL trades cannot be rolled|
+|JN||Rollovers are only applicable for Repo trades without Funds |
+|JO||Rollovers are only applicable for Repo trades with a single Cost Centre|
+|JP||Repo is set for maturity; undo maturity setting before rollover|
+|JQ||Maturity Settlement Due Date is prior to the start date|
+|JR||Maturity Trade Date is prior to the original trade date |
+|JS||Repo Trade Date is after the Settlement Due Date|
+|JT||Re-allocations exist on this Repo trade after its trade date|
+|JU||Repo rollover Term Date is prior to its original term|
+|JV||Repo rollover Term Date is mandatory for BUY/SEL Repo trades |
+|JW||Repo rollover Trade Date is after its original term date |
+|JX|Y|Warning: Rollover Term Date is equal to the original term date|
+|JY||Invalid rollover Accrual Interest indicator|
+|JZ||Length is invalid|
+|KA||Invalid Agency Type code|
+|KB||CREST Raise Priority must be between 0 and 90|
+|KC||Invalid CREST System of Origin|
+|KD||Invalid CREST|
+|NC|condition|
+|KE||Invalid CREST Cash Movement Type|
+|KF||Invalid CREST Agent indicator|
+|KG||Invalid CREST Suppress Revaluation indicator|
+|KH||Invalid CREST Bargain Condition|
+|KI||Invalid CREST Concentration Limit|
+|KJ||Invalid CREST Include Rebate Rate indicator|
+|KK||Non-numeric|
+|KL|Y|Settlement Agency data ignored (not a CREST trade)|
+|KM||CREST Raise Priority is only applicable to settled trades|
+|KN||Not a CREST trade|
+|KO||Trade set for Auto Priority Raise |
+|KP||Invalid Auto Priority Raise indicator|
+|KQ|Y|Warning: Trade has been settled today|
+|KR||Invalid Agency code type (should be Equity or Bond)|
+|KS||Raise Priority is invalid for a CREST trade with no returns|
+|KT||Trade split is disallowed; Funds on trade|
+|KU||Trade split is disallowed; Non-cash collateral trade|
+|KV||Trade split is disallowed; Pending returns on trade|
+|KW||Trade split is disallowed; Intercompany trade|
+|KX||Trade split is disallowed; CREST returned not received|
+|KY||Trade split is disallowed; CREST transaction has been split|
+|KZ|B|Trade has been settled today|
+|LA||Trade split is disallowed; CREST return not received|
+|LB||Split quantity mismatch with original trade|
+|LC||Split loan value mismatch with original trade|
+|LD||Trade must be split over at least two transactions|
+|LE||Invalid Collateral Haircut Percentage|
+|LF||Own Contract Reference has multiple trade references; no update|
+|LG||CREST instruction has not been printed|
+|LH||Trade is fully settled; must be pending|
+|LI||Trade is a non-dollar Repo |
+|LJ||CREST Instruction is cancelled|
+|LK||Link Reference is mandatory for Multi-Collateral Repo trades|
+|LL||Repo collateral item has no corresponding cash item|
+|LM||No valid Default Cash Posting Security has been set up in system parameters|
+|LN||Invalid Repo Trade indicator|
+|LO||Invalid Posting Type for a Multi-Collateral Repo trade|
+|LP||Invalid Lender Module Trade flag|
+|LQ||Security cross reference has multiple main codes|
+|LR||Return Date is prior to settlement of the trade|
+|LS||Posting Type may not be amended|
+|LT||Counterparty may not be amended|
+|LU||Security code may not be amended|
+|LV||Collateral Type may not be amended|
+|LW||Quantity may not be amended|
+|LX||Loan Price may not be amended|
+|LY||Loan Value may not be amended|
+|LZ||Security Settlement Date may not be amended|
+|MA||Security Settlement Mode may not be amended|
+|MB||Cash Settlement Date may not be amended|
+|MC||Cash Settlement Mode may not be amended|
+|MD||DVP may not be amended|
+|ME||Loan Currency may not be amended|
+|MF||Quantity 2dp may not be amended|
+|MG||Loan Price 7dp may not be amended|
+|MH||Recalled Indicator may not be amended|
+|MI||Agency Reference may not be amended|
+|MJ||External Narrative line one may not be amended|
+|MK||External Narrative line two may not be amended|
+|ML||Trade Date may not be amended|
+|MM||Haircut Percentage may not be amended|
+|MN||Cash Wash Currency may not be amended|
+|MO||Cash Wash Value may not be amended|
+|MP||Cost Centre code may not be amended|
+|MQ||Cost Centre Quantity 2dp may not be amended|
+|MR||Cost Centre Quantity may not be amended|
+|MS||Cost Centre value may not be amended|
+|MT||Finder may not be amended |
+|MU||Finder Rate may not be amended |
+|MV||Own Counterparty SWIFT may not be amended|
+|MW||Own Counterparty Cash Clearer code may not be amended|
+|MX||Own Counterparty Cash Clearer SWIFT may not be amended|
+|MY||Own Counterparty Cash Clearer A/c Number may not be amended|
+|MZ||Own Counterparty Cash Clearer Sub A/c may not be amended|
+|NA||Own Counterparty Cash Clearer A/c Reference may not be amended |
+|NB||Own Counterparty Cash Clearer Contact Name may not be amended|
+|NC||Own Counterparty Cash Clearer Name may not be amended|
+|ND||Own Counterparty Security Clearer code may not be amended|
+|NE||Own Counterparty Security Clearer SWIFT may not be amended|
+|NF||Own Counterparty Security Clearer A/c Number may not be amended|
+|NG||Own Counterparty Security Clearer Sub A/c may not be amended|
+|NH||Own Counterparty Security Clearer A/c Reference may not be amended  |
+|NI||Own Counterparty Security Clearer Contact Name may not be amended |
+|NJ||Own Counterparty Security Clearer Name may not be amended |
+|NK||Counterparty Cash Clearer code may not be amended|
+|NL||Counterparty Cash Clearer SWIFT may not be amended|
+|NM||Counterparty Cash Clearer A/c Number may not be amended|
+|NN||Counterparty Cash Clearer Sub A/c may not be amended|
+|NO||Counterparty Cash Clearer A/c Reference may not be amended|
+|NP||Counterparty Cash Clearer Contact Name may not be amended|
+|NQ||Counterparty Cash Clearer Name may not be amended|
+|NR||Counterparty Security Clearer code may not be amended|
+|NS||Counterparty Security Clearer SWIFT may not be amended|
+|NT||Counterparty Security Clearer A/c Number may not be amended|
+|NU||Counterparty Security Clearer Sub A/c may not be amended|
+|NV||Counterparty Security Clearer A/c Reference may not be amended|
+|NW||Counterparty Security Clearer Contact Name may not be amended|
+|NX||Counterparty Security Clearer Name may not be amended|
+|NY||Dealer Id may not be amended|
+|NZ||CREST System of Origin may not be amended|
+|OA||CREST Bargain Conditions may not be amended|
+|OB||CREST|
+|NC||Condition may not be amended|
+|OC||CREST Priority may not be amended|
+|OD||CREST Agent Indicator may not be amended|
+|OE||CREST DBV Margin may not be amended|
+|OF||CREST DBV Consideration may not be amended|
+|OG||CREST Matching Consideration may not be amended|
+|OH||CREST Concentration Limit may not be amended|
+|OI||CREST Cash Movement Type may not be amended|
+|OJ||CREST Include Rebate Rate may not be amended|
+|OK||CREST Suppress Revaluation may not be amended|
+|OL||Cash Pool value may not be amended|
+|OM||Prepay Rate may not be amended|
+|ON||Available for use|
+|OO||Interest Rate may not be amended|
+|OP||Euroclear Shares Type may not be amended |
+|OQ||Euroclear Reference may not be amended |
+|OR||Euroclear Price may not be amended |
+|OS||Euroclear Priority may not be amended |
+|OT||Euroclear Comments may not be amended|
+|OU||Quantity contains a non-numeric value or decimals|
+|OV||Loan Price contains a non-numeric value or decimals|
+|OW||Loan Value contains a non-numeric value or decimals|
+|OX||Required Margin contains a non-numeric value or decimals|
+|OY||Interest Rate contains a non-numeric value or decimals|
+|OZ||Net Dividend contains a non-numeric value or decimals|
+|PA||Overseas Dividend contains a non-numeric value or decimals|
+|PB||Domestic Dividend contains a non-numeric value or decimals|
+|PC||Minimum Fee contains a non-numeric value or decimals|
+|PD||Finder Fee Rate contains a non-numeric value or decimals|
+|PE||Euroclear Price contains a non-numeric value or decimals|
+|PF||Non-cash Collateral Haircut contains a non-numeric value or decimals|
+|PG||Cash Pool Value contains a non-numeric value or decimals|
+|PH||Prepay Rate contains a non-numeric value or decimals|
+|PI||Cash Wash Value contains a non-numeric value or decimals|
+|PJ||Repo Coupon contains a non-numeric value or decimals|
+|PK||Repo End Coupon contains a non-numeric value or decimals|
+|PL||Repo Invest Rate contains a non-numeric value or decimals|
+|PM||Repo Accrual contains a non-numeric value or decimals|
+|PN||Repo Clean Price contains a non-numeric value or decimals|
+|PO||CREST Priority contains a non-numeric value or decimals|
+|PP||CREST Matching Consideration contains a non-numeric value or decimals|
+|PQ||CREST DBV Consideration contains a non-numeric value or decimals|
+|PR||CREST DBV Margin contains a non-numeric value or decimals|
+|PS||CREST New Priority contains a non-numeric value or decimals|
+|PT||COST Centre Quantity contains a non-numeric value or decimals|
+|PU||COST Centre Quantity 2dp contains a non-numeric value or decimals|
+|PV||COST Centre Value contains a non-numeric value or decimals|
+|PW||Fund Quantity contains a non-numeric value or decimals|
+|PX||Fund Value contains a non-numeric value or decimals|
+|PY||Split Quantity contains a non-numeric value or decimals|
+|PZ||Split Loan Price contains a non-numeric value or decimals|
+|QA||Split Loan Value contains a non-numeric value or decimals |
+|QB||Split Priority contains a non-numeric value or decimals|
+|QC||Invalid Own Contract Reference|
+|QD||Either Trade Reference or Own Contract Reference must be populated|
+|QE|Y|Warning: Security Settlement Date is set as a holiday|
+|QF|Y|Warning: Cash Settlement Date is set as a holiday|
+|QG|Y|Available for use|
+|QH|Y|Available for use|
+|QI||Invalid Monthly Billed indicator; must be Y or N|
+|QJ||Invalid Auto Settlement indicator|
+|QK||Auto Settlement failed due to incorrect settlement dates |
+|QL||Return Posting Type does not match that of the trade|
+|QM|Y|Warning: Pending marks cancelled due to new return|
+|QN|Y|Warning: New return posted but pending marks not cancelled|
+|QO||Invalid Confirmation or Instruction suppress flag|
+|QP|Y|Warning: Own Contract Reference has multiple trade references|
+|QQ||Repo and Muti-Collateral Repo trades cannot be Intercompany trades|
+|QR||Invalid Intercompany Cost Centre code|
+|QS||Invalid Cost Centre Code; no Intercompany database defined|
+|QT||Invalid database name for the Intercompany Cost Centre|
+|QU||Intercompany Cost Centre code may not be null|
+|QV||Intercompany database(s) missing from upload record|
+|QW||Full return of an Open Repo invalid; use standard return|
+|QX||No remaining quantity or value on trade to return|
+|QY||Full returns only available with status of N|
+|QZ||Return Due Date is before the system date|
+|RA||Invalid Trade or Collateral Reference|
+|RB||Trade or Collateral Reference is already in use|
+|RC||Invalid Vehicle code|
+|RD||Invalid Taxable indicator|
+|RE||Invalid Repo Accrual type|
+|RF|B|Counterparty is over Issuer limit|
+|RG|B|Own Counterparty over Issuer limit|
+|RH||Invalid record type |
+|RI||Invalid record type for a Lender system |
+|RJ||Invalid record type for a Cost Centre system |
+|RK||Additional record count does not match actual additional record count|
+|RL||Record contains User Defined Fields (UDFs) but none are defined |
+|RM||Number of User Defined Fields (UDFs) exceeds the maximum defined |
+|RN||Invalid record type; Lender module is not active |
+|RO||Invalid record type; Cost Centre module is not active |
+|RP||Repo Accrual type may not be set for non dollar Repo trades|
+|RQ||Repo Accrual type may not be amended; trade is repaid|
+|RR||Number of User Defined Fields (UDFs) exceeds the number defined|
+|RS||Own Contract Reference has multiple Trade References|
+|RT||Invalid Minimum Fee type|
+|RU||Lender Holds may not be amended|
+|RV||Cash should be unsettled prior to amendment|
+|RW||Return and Splits are not valid for Lender Holds|
+|RX||Allocation failed; unable to fully allocate|
+|RY||All Intercompany Cost Centres are required|
+|RZ||Maximum linked databases is currently 3 for Cost Centres|
+|SA||Quantity mismatch for re-allocation|
+|SB||No changes made or changes incomplete|
+|SC||Maximum number of Cost Centres exceeded  |
+|SD||Re-allocations are only valid in the local database|
+|SE||Intercompany collateral re-allocation is disallowed|
+|SF||Collateral re-allocation disallowed; Mortgage Back trade|
+|SG||Invalid Cost Centre for Intercompany database|
+|SH||Issuer limit exceeded|
+|SI|Y|Warning: Issuer limit exceeded|
+|SJ||DBV Class group limit exceeded|
+|SK|Y|Warning: DBV Class group limit exceeded|
+|SL||Daily Settlement Limit exceeded|
+|SM|Y|Warning: Daily Settlement Limit exceeded|
+|SN||Collateral Mix Limit exceeded|
+|SO|Y|Warning: Collateral Mix Limit exceeded|
+|SP||Prepayment Limit exceeded|
+|SQ|Y|Warning: Prepayment Limit exceeded|
+|SR||Has no decimal places|
+|SS||Invalid number of decimal places|
+|ST||Invalid DBV Class group code|
+|SU||Invalid Allocation Override indicator|
+|SV||CREST Security Status is not enabled|
+|SW||CREST Security is not eligible for settlement|
+|SX||Cost Centre allocation is required for Intercompany trades|
+|SY||Price cannot be less than trade’s minimum price|
+|SZ||Rebate rate is greater than the Fund maximum|
+|TA||Fee rate is less than the Fund maximum|
+|TB||Negative forward availability|
+|TC||Own Counterparty Collateral Mix limit exceeded|
+|TD|Y|Warning: Own Counterparty Collateral Mix limit exceeded|
+|TE||Error: Overall Daily Settlement limit exceeded|
+|TF|Y|Warning: Overall Daily Settlement limit exceeded|
+|TG||Error: Overall Fund Issuer limit exceeded|
+|TH|Y|Warning: Overall Fund Issue limit exceeded|
+|TI||Error: Overall DBV Class group limit exceeded|
+|TJ||Warning: Overall DBV Class group limit exceeded|
+|TK||Error: Overall Fund credit limit exceeded|
+|TL||Warning: Overall Fund credit limit exceeded|
+|TM||Final Security Settlement Date is before a mark|
+|TN||Final Security Settlement Date is before a re-allocation|
+|TO||Cash Date is before trade settlement|
+|TP||Security Settlement Date is before trade settlement|
+|TQ||Date is invalid|
+|TR||Invalid Y/N toggle|
+|TS||Invalid value|
+|TT||Error: Trades with warnings cannot proceed|
+|TU||AutoBorrow Settlement Id does not match Location Settlement Id |
+|TV||Cannot default the Settlement Id for AutoBorrow|
+|TW||Minimum Quantity contains a non-numeric value or decimals|
+|TX||Rounding Quantity contains a non-numeric value or decimals|
+|TY||Unable to amend Term Repo trade’s second leg|
+|TZ||Security cross reference code is not defined|
+|UA||Posting Type is unavailable to User Profile|
+|UB|Y|Warning: Stale priced security|
+|UC||Error: Stale priced security|
+|UD||System or Counterparty is not set up for authorisation|
+|UE||Trade or Return must be pending for authorisation|
+|UF||Trade or Return is already authorised|
+|UG||Trade or Return authorisation failed|
+|UH||Authorisation unavailable to User Profile|
+|UI||Trade or return not authorised; Credit Limit error|
+|UJ||Trade or Return user id is the same as the authorisation user id|
+|UK|Y|Warning: Clearer names are not complete|
+|UL|Y|Warning: Settlement Date is before the trade’s Term Date|
+|UM||Invalid Special Loan flag|
+|UN||Special Loan flag may not be amended|
+|UO||Invalid Custody Bank cross reference|
+|UP||Invalid Location cross reference|
+|UQ||Invalid Mortgage Back Face indicator|
+|UR|Y|Warning: Trade factor does not match security’s current factor|
+|US|Y|Warning: Quantity is greater than availability|
+|UT||Return face is greater than available|
+|UU||Lender rollover quantity may not be greater than the original trade quantity|
+|UV||Security Settlement Date is on or before the Dividend Accrual|
+|UW||Warning: Trade has forward-dated rate change|
+|UX||All security cross references are inactive|
+|UY||Invalid Index Rate code|
+|UZ||Invalid Index Rate Increment|
+|VA||Invalid Index Rate Update type|
+|VB||Quantity is below the tradeable lot minimum|
+|VC||Quantity is not within the defined tradeable lot increments|
+|VD||Value is below the tradeable lot minimum|
+|VE||Invalid Own Security Agency|
+|VF||Invalid Own Cash Agency|
+|VG||Invalid Counterparty Security Agency|
+|VH||Invalid Counterparty Cash Agency|
+|VI||Repo return; invalid Own Security Agency|
+|VJ||Repo return; invalid Own Cash agency|
+|VK||Repo return; invalid Counterparty Security Agency|
+|VL||Repo return; invalid Counterparty Cash Agency|
+|VM||Own Security Clearer Agency may not be amended |
+|VN||Own Cash Clearer Agency may not be amended|
+|VO||Counterparty Security Clearer Agency may not be amended|
+|VP||Counterparty Cash Clearer Agency may not be amended|
+|VQ||Term Date may not be amended on non-dollar Repo trades|
+|VR||Already set as pending cancellation|
+|VS||Can only process items pending cancellation|
+|VT||Valid Cost Centres are A-Z, 0-9 and special chars !,@,#,$,%,&,*,(,),+,=,?|
+|VU||Invalid Security Bulking Level|
+|VV||Extended BCP Reference contains invalid character(s)|
+|VW||Cancellation prohibited; return associated with Recall(s)|
+|VX||Fund is over its market type credit limit|
+|VY||Warning: fund is over its Market Type credit limit|
+|VZ||Fund is over its Market Type Daily Settlement limit|
+|WA||Warning: Fund is over its Market Type Daily Settlement limit|
+|WB||Collateral cannot be set as pending cancellation|
+|WC||Authorisation is required before a pending cancellation can be processed|
+|WD||Invalid Dividend Override code|
+|WE||Does not triangulate to value; invalid Price|
+|WF||Available for future use|
+|WG||Rate exceeds the maximum allowed in system parameters|
+|WH||Invalid Posting Type for Lender Hold trade conversion|
+|WI||Lender trade flag is mandatory for Lender Hold trade conversions|
+|WJ||Lender Hold specified is invalid|
+|WK||Recall Fund or Cost Centre allocations do not match recalls|
+|WL||Error: from plugin hook (g1tradevalidation)|
+|WM||Warning: from plugin hook (g1tradevalidation)|
+|WN||Warning: Prepay Rate is greater than the Warning Rate in system parameters|
+|WO||Error: Prepay Rate is greater than the Error Rate in system parameters|
+|WP||Additional Limit Error percentage exceeded|
+|WQ||Additional Limit Warning percentage exceeded|

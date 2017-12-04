@@ -1,0 +1,28 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<!-- commented
+<link rel="stylesheet" type="text/css" href="{% static 'g1_helper/style.css' %}" />
+-->
+
+<body>
+	<h1>G1 File</h1>
+    <p></p>
+	<table class="table table-striped">
+        <thead class="thead-default">
+			<tr>
+				<th>Filename</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for f in g1_file_list %}
+			<tr>
+				<td>{{f.filename}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<p></p>
+</body>
+{% endblock %}

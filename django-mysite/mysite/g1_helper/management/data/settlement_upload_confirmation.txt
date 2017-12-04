@@ -1,0 +1,63 @@
+#  SETTLEMENT UPLOAD CONFIRMATION FILE : HEADER 
+#                        DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+
+TYPE=HEADER
+|RECORD TYPE|X(1)|1,1|= 0.|
+|RECORD DATE|9(8)|2,8|CCYYMMDD. |
+|CONFIRMATION FILE NAME|X(18)|10,18|Current file name. |
+|CONFIRMATION FILE TYPE|X(30)|28,30|‘SETTLEMENT UPLOAD CONFIRMATION’. |
+|OWN COUNTERPARTY CODE|X(6)|58,6|Current Database Own Counterparty Code. |
+|OWN COUNTERPARTY CROSS REFERENCE|X(10)|64,10|Own Counterparty Interface Cross Reference. |
+|FILLER|X(434)|74,434 ||
+ 
+#  SETTLEMENT UPLOAD CONFIRMATION FILE : DETAIL 
+#                        DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+
+TYPE=DETAIL
+|RECORD TYPE|X(1)|1,1|= 1. |
+|GLOBAL ONE TRADE REFERENCE|X(12)|2,12|Will be populated with the main part of the bulk cash pool reference if applicable. |
+|MESSAGE CODE|X(2)|14,2|Error codes as listed on the Settlement Upload file layout. |
+|MESSAGE DESCRIPTION|X(50)|16,50||	 
+|SECURITY NAME|X(75)|66,75|	 
+|CLIENT NAME|X(50)|141,50|
+|TRANSACTION NARRATIVE|X(20)|191,20|This will be present if the narrative for the transaction has been passed through the Settlement Upload. |
+#  THE FOLLOWING FIELDS WERE ADDED FOR VERSION 1.3 
+|OWN CONTRACT REFERENCE|X(16)|211,16 |	 |
+|MESSAGE STATUS INDICATOR|9(1)|227,1|Set to 1 for successful, 2 for posted but warning or 3 for an error. |
+ #  THE FOLLOWING FIELDS WERE ADDED FOR VERSION 1.4 
+|SECURITY BULK REFERENCE|X(8)|228,8|Only present for trades or returns in security bulk items. |
+|SECURITY MAIN CODE|X(12)|236,12| |
+|COUNTERPARTY CODE|X(6)|248,6 | |
+#                      DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+|BIC CODE|X(25)|254,25|Own Counterparty Security Clearer SWIFT code. |
+|UPLOAD CASH SETTLEMENT VALUE|S9(11).9(2)|279,15|Cash value on the file. Relevant for cash settlements, marks, cash pool marks and settled pending marks. |
+|TRADE CASH VALUE|S9(11).9(2)|294,15|Current trade or return value after any posting. |
+|UPLOAD CURRENCY|X(3)|309,3|Currency code in the file. |
+|TRADE CURRENCY|X(3)|312,3|Currency on the trade.| 
+|UPLOAD QUANTITY|S9(11).9(2)|315,15|Quantity on the file. Relevant for security settlement. |
+|TRADE QUANTITY|S9(11).9(2)|330,15|Current trade or return quantity after any posting. |
+|UPLOAD CASH SETTLEMENT DATE|X(8)|345,8|Cash Settlement Date in the file. Only relevant for Settlements and Marks. |
+|UPLOAD SECURITY SETTLEMENT DATE|X(8)|353,8|Security Settlement Date in the file. Only relevant for Settlements and Rate changes. |
+|TRADE CASH SETTLEMENT DUE DATE|X(8)|361,8|Current trade or return Cash Settlement Due Date. Only relevant for Settlements. |
+|TRADE SECURITY SETTLEMENT DUE DATE|X(8)|369,8|Current trade or return Security|Settlement Due Date. Only relevant for Settlements and Fails. |
+|ERROR CODE VALUE|X(12)|377,12|The code relating to the error, i.e. Counterparty code, Security code, Settlement mode etc, where applicable, see Detail Section for full list of possible codes that could appear here.  SETTLEMENT INDICATOR 	X(1) 	389,1 	C-Cash, S-Security, B-Both, P-Pending Mark, M-Mark, R-Rate Change, U-Unsettlement, F-Failed Settlement.|
+|UPLOAD FAIL CODE|X(3)|390,3|Only relevant to Fails. |
+|UPLOAD INTEREST RATE|S9(2).9(6)|393,10|Interest rate in the file.|
+|CANCELLED INDICATOR|X(1)|403,1|Only relevant for cancelled settlement transactions. |
+|MARK ACCRUED INTEREST|S9(11).9(2)|404,15|Value of Accrued Interest for US Dollar type repos on the file. Only relevant for Marks. |
+|MARK PRICE|9(7).9(7)|419,15|Mark Price must be in the currency of the loan and will be used if the Settled Indicator is set to ‘M’. |
+|REPO TERM DATE|X(8)|434,8|CCYYMMDD. Only needed for Term Repo Change No Rollovers. New returns will be created with this date as the Term Date. Blank will assume current term date.|
+|EFFECTIVE DATE|X(8)|442,8|CCYYMMDD – Only needed for Repo Change No Rollover. Will be used as effective date for Pending Returns, Interest Accrual, Marks and Rate Changes created as a result of posting the transaction. Blank will assume current Global One date. |
+|MOVEMENT VALUE|S9(11).9(2)|450,15|Value of amendment for Repo Change No Rollover. This will be used for the value of a pending return and to determine if a mark is to be posted. A mark will be calculated using the difference between this value and the current outstanding trade value. If this field is blank and there is a Movement Price (please see below) then the value will be calculated using the price, however if both the price and value are blank then the current outstanding trade value will be used. |
+|REPO ACCRUED INTEREST|S9(11).9(2)|465,15|Accrued Interest for Term Repo Change No Rollover only. Blank will cause accrual to be calculated using term date. |
+|MOVEMENT PRICE|9(7).9(7)|480,15|New trade price for Repo Change No Rollover only. If this is blank or  if the Movement Value field is  populated the price will be  calculated from the value. If the  Movement Value and Movement  Price fields are blank then the  price will be defaulted from the  trade. If the price is populated but  the value is not then this will also  be used to decide if a mark is to  be created.|
+# THE FOLLOWING FIELDS WERE ADDED FOR VERSION 1.7 
+|BULK CASH POOL EXTENDED REFERENCE|X(3)|495,3|Only applicable for Bulk Cash Pools with extended reference. The bulk cash pool reference excluding the extended reference will be in the Trade Reference field. |
+|EXTERNAL USER ID|X(10)|498,10|External User ID for Settlement Activity|
+#  SETTLEMENT UPLOAD CONFIRMATION FILE : FOOTER 
+#                        DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+
+TYPE=FOOTER
+|RECORD TYPE|X(1)|1,1|= 9. |
+|DETAIL RECORD COUNT|9(6)|2,6 ||
+|FILLER|X(500)|8,500||

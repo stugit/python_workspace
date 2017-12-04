@@ -1,0 +1,361 @@
+﻿TYPE=HEADER
+|RECORD TYPE| |X(1)| 1,1 = 0.|
+|RECORD DATE|REDT|9(8)|2,8|CCYYMMDD.|
+#THE_FOLLOWING_FIELD_WAS_ADDED_FOR_VERSION_4.1|MULTIPLE ACCEPTANCE RECORDS|MUAC|X(1)|10,1|Set to ‘N’ If multiple Confirmation file records are not required per transaction. If a transaction has more than one error then ‘Y’ or Null will cause all these errors to appear in the Trade Upload Confirmation file.|
+#_THE_FOLLOWING_ADDED_FOR_VERSION_5.2|CREATE_INVALID_SECURITIES|CRST|X(1)|11,1|Set to ‘Y’ will automatically create securities that are on transactions but missing from the Security Database. Please also see the External Comments field (position 237).|
+|FILLER||X(3781)|12,3781||
+
+TYPE=DETAIL
+|RECORD TYPE||X(1)|1,1|= 1.|
+|STATUS|STAT|X(1)|2,1|N-New, C-Cancelled, A-Amended, U- Update, T-Authorise (For Trade and Returns only) D-Pending Cancellation, E-Accept Pending Cancellation, X- Reject Pending Cancellation|
+|TRANSACTION_TYPE|TDRE|X(1)|3,1|T-Trade, R-Return, A-Re-Allocation, P- Raise Priority, C-Cancel Crest Instruction, S-Split, M-Repo  , O-Repo Rollover, F–Full Return (only valid with STATUS = N)|
+|POSTING_TYPE|TYPE|X(3)|4,3|Please see Note 1 at the end of the layout.|
+|COUNTERPARTY_CODE|CNTP|X(6)|7,6||
+|COUNTERPARTY_CROSS_REFERENCE|CXRF|X(10)|13,10||
+|SECURITY_CODE_TYPE|SECT|X(1)|23,1|A-Sedol, B-ISIN, C-Cusip, D-Quick, E- Ticker, F-In-House Cross Reference Used to select one of the following security codes.|
+|SEDOL|SEDL|X(12)|24,12||
+|ISIN_CODE|ISIN|X(12)|36,12||
+|CUSIP_CODE|CUSP|X(12)|48,12||
+|QUICK_CODE|QUIK|X(12)|60,12||
+|TICKER_CODE|TICK|X(12)|72,12||
+|IN-HOUSE_CROSS_REFERENCE|IXRF|X(12)|84,12||
+|CALLABLE|CALA|X(1)|96,1|Y/N.||
+|COLLATERAL_TYPE|CLTY|X(1)|97,1|C-Cash, N-Non-Cash, P-Cash Pool.  Please note that this field will default to ‘C’ for repos and buy/sell backs.|
+|QUANTITY|QUTY|S9(11)|98,12|Please see the Decimal Places notes within the Detail section. See note 3.|
+|CURRENCY|CURR|X(3)|110,3|If not present this will default from the Counterparty Default Currency. From version 5.4 if there is no counterparty default currency it will default from the Security Pricing Currency.|
+|LOAN_PRICE|LPRI|S9(9)v9(4)|113,14|Calculated from Loan Value and Quantity if not present. If Loan Price, Loan Value and Quantity are all present then the Loan Price will be reset to match the Loan Value divided by Quantity if this differs from the Loan Price present. Please see the Decimal Places notes within the Detail section. See note 3. LOAN VALUE LVAL S9(11)v9(2)|127,14|Calculated from Loan Price and Quantity if not present. See note 3.|
+|REQUIRED_MARGIN|REQM|9(3)v9(2)|141,5|This is the trade margin, for Non-Cash, Cash and Cash Pool Trades.|
+|INTEREST_RATE|INTR|S9(2)v9(6)|146,9|This can be formatted as required with an explicit decimal point thus allowing any number of numbers before and after the decimal. If no explicit decimal point is provided then 3 characters before and 6 characters after an implied decimal point are assumed. Please note, however, that the maximum number of decimal places held will be 6, and any rate will thus be truncated at 6 places if more than this are entered after the decimal point. Please also see the Decimal Places notes within the Detail section. See note 3. The population of the Interest Rate field affects whether the index rate fields on the Other Information screen in Global One will be used, and hence whether the trade will be an index rate or non-index rate trade. For more details, see the description for ADF7 in Note 2: Additional (Other) Field Record Type. In version 6.5 a Default Data code was added which can be used to default the Rate if this field is left blank.|
+|SECURITY_SETTLEMENT_DUE_DATE|SSDD|9(8)|155,8|CCYYMMDD. Validated that it is not a holiday or prior to the trade date.|
+|SECURITY_SETTLEMENT_MODE|SSMO|X(6)|163,6|Validated against Mode file.|
+|CASH_SETTLEMENT_DUE_DATE|CSDD|9(8)|169,8|CCYYMMDD. Required on trades if versus Cash Collateral and not DVP. In version 5.4 can also be populated for a non-cash trade to be used for pre-payment limits. Validated that it is not a holiday or prior to the trade date.|
+|CASH_SETTLEMENT_MODE|CSMO|X(6)|177,6|Validated against Mode file.|
+|DVP|DVPP|X(1)|183,1|Y/N. If defaulted then uses the Counterparty Parameters, or the System Parameter if those are blank.|
+|TRADE_DATE|TDDT|9(8)|184,8|CCYYMMDD.|
+|TERM_DATE|TMDT|9(8)|192,8|CCYYMMDD.|
+|NET_DIVIDEND_PERCENTAGE|DIVP|9(3)v9(2)|200,5|Between zero and 99999. Set to 100 if not present and the Dividends From Funds Parameter is set to ‘Y’ for a fund level trade. Otherwise defaulted from the counterparty as it is within trade input. Will be overridden by the Extended Net Dividend %age if present.|
+|OVERSEAS_TAX_PERCENTAGE|OVRP|9(3)v9(2)|205,5|Between zero and 99999. Set to zero if not present and the Dividends From Funds Parameter is set to ‘Y’ for a fund level trade. Otherwise defaulted from the counterparty as it is within trade input. Will be overridden by the Extended Overseas Tax %age if present.|
+|DOMESTIC_TAX_PERCENTAGE|DOMP|9(3)v9(2)|210,5|Between zero and 99999. Set to zero if not present and the Dividends From Funds Parameter is set to ‘Y’ for a fund level trade. Otherwise defaulted from the counterparty as it is within trade input. Will be overridden by the Extended Domestic Tax %age if present.|
+|INTEREST_TYPE|INTT|X(2)|215,2|A, B, BF, BL, BS, F, FS, L and LS. Version 5.8 added type of A.|
+|INTERNAL_COMMENTS|INCM|X(20)|217,20|First line only.|
+|EXTERNAL_COMMENTS|EXCM|X(50)|237,50|First line only. With version 5.2: For the creation of missing securities the first 49 characters of this field should be populated with the security description, and the 49  character should be the class type. A value of ‘E’ should be used for security class COM for common equity and ‘B’ should be used for security class BND for Bond.|
+|TRADE_CATEGORY|TDCA|X(3)|287,3||
+|LINK_REFERENCE|LKRF|X(8)|290,8||
+|OWN_CONTRACT_REFERENCE|OWRF|X(16)|298,16|Mandatory for a new trade where the Mandatory Own Contract Reference is set to ‘Y’. Can be provided for all other record types. Please see notes at the beginning of the layout.|
+|GLOBAL_ONE_TRADE_REFERENCE|GORF|X(12)|314,12|Mandatory only if the Own Contract Reference is blank for all status types except for a new trade. Version 4.8 allowed the passing of a Trade Reference for a new trade or collateral item.|
+|MINIMUM_FEE|MNFE|9(12)v9(2)|326,14|Override to Counterparty default for this trade. See also positions 3572 to 3584 for Minimum Fee Override fields.|
+|MINIMUM_FEE_CURRENCY|MNCU|X(3)|340,3|Override to Counterparty default for this trade.|
+|FINDER/LOC_BANK_CODE|FIBC|X(6)|343,6|Mandatory for Collateral LOC Deliver.|
+|FINDER/LOC_BANK_FEE|FIBF|9(3)v9(6)|349,9||
+|EUROCLEAR_SHARES_TYPE|EUST|X(3)|358,3||
+|EUROCLEAR_REFERENCE|EURF|X(16)|361,16||
+|EUROCLEAR_PRICE|EUPR|9(10)v9(4)|377,14||
+|EUROCLEAR_PRIORITY|EUPI|9(1)|391,1||
+|EUROCLEAR_COMMENTS|EUCM|X(35)|392,35||
+|OWN_SWIFT_BIC_CODE|OWSW|X(20)|427,20|Own Counterparty details.|
+|CASH_CLEARER_CODE|CCLR|X(10)|447,10|Own Counterparty details for PL, PR, XPL and XPR only.|
+|CASH_CLEAR_SWIFT_BIC|CCSW|X(25)|457,25||
+|CASH_CLEARER_ACCOUNT_NUMBER|CCAC|X(25)|482,25||
+|CASH_CLEARER_SUB-ACCOUNT|CCSA|X(25)|507,25||
+|CASH_CLEARER_ACCOUNT_REFERENCE|CCRF|X(50)|532,50||
+|CASH_CLEARER_CONTACT|CCCO|X(30)|582,30||
+|CASH_CLEARER_NAME|CCNM|X(50)|612,50||
+|SECURITY_CLEARER_CODE|SCLR|X(10)|662,10||
+|SECURITY_CLEARER_SWIFT_BIC|SCSW|X(25)|672,25|
+|SECURITY_CLEARER_ACCOUNT_NUMBER|SCAC|X(25)|697,25||
+|SECURITY_CLEARER_SUB-ACCOUNT|SCSA|X(25)|722,25||
+|SECURITY_CLEARER_ACCOUNT_REFERENCE|SCRF|X(50)|747,50||
+|SECURITY_CLEARER_CONTACT|SCCO|X(30)|797,30||
+|SECURITY_CLEARER_NAME|SCNM|X(50)|827,50||
+|CL_CASH_CLEARER_CODE|CLLR|X(10)|877,10|Counterparty details for PL, PR, XPL and XPR only.|
+|CL_CASH_CLEARER_SWIFT_BIC|CLSW|X(25)|887,25||
+|CL_CASH_CLEARER_ACCOUNT_NUMBER|CLAC|X(25)|912,25||
+|CL_CASH_CLEARER_SUB-ACCOUNT|CLSA|X(25)|937,25||
+|CL_CASH_CLEARER_ACCOUNT_REFERENCE|CLRF|X(50)|962,50||
+|CL_CASH_CLEARER_CONTACT|CLCO|X(30)|1012,30||
+|CL_CASH_CLEARER_NAME|CLNM|X(50)|1042,50||
+|CL_SECURITY_CLEARER_CODE|CSLR|X(10)|1092,10||
+|CL_SECURITY_CLEARER_SWIFT_BIC|CSSW|X(25)|1102,25||
+|CL_SECURITY_CLEARER_ACCOUNT_NUMBER|CSAC|X(25)|1127,25||
+|CL_SECURITY_CLEARER_SUBACCOUNT|CSSA|X(25)|1152,25||
+|CL_SECURITY_CLEARER_ACCOUNT_REFERENCE|CSRF|X(50)|1177,50||
+|CL_SECURITY_CLEARER_CONTACT|CSCO|X(30)|1227,30||
+|CL_SECURITY_CLEARER_NAME|CSNM|X(50)|1257,50||
+|RECALLED_INDICATOR|RCAL|X(1)|1307,1|Y/N. Returns only. Assumed to be ‘N’ if not set to ‘Y’.|
+|FUND_CODE|FUND|X(6)|1308,6|Please see notes at the start of the layout.|
+|FUND_CROSS-REFERENCE|FXRF|X(10)|1314,10||
+|FUND_LOCATION|FLOC|X(3)|1324,3||
+|FUND_LOCATION_CROSSREFERENCE|FLXF|X(10)|1327,10||
+|AUTO-SETTLEMENT|ASET|X(1)|1337,1|Y/N/A. If same day settlement, will settle automatically on update if Y present. N-Do not auto settle, Y-Auto Settle, but on an invalid date the trade still posted and warning given. If the flag is blank then any system parameters held for auto settlement will be checked. If the criteria is met then the trade or return will be auto settled. Version 4.3 added: A-Attempt to Auto settle but reject trade if cannot auto settle.|
+|NON-CASH_COLLATERAL_HAIRCUT|NCCH|9(3)v9(2)|1338,5|Override to default haircut percentages, used for new collateral items only.|
+|CASH_POOL_VALUE|POOL|S9(11)v9(2)|1343,14|The value of the cash pool settlement for cash pool trades and returns only. See note 3.|
+|PRE-PAY_RATE|PRPY|S9(2)v9(6)|1357,9|In version 6.2 this was enabled to allow a pre-pay rate to be set on a trade to be used as a default in Settlement Input. This can be formatted as required with an explicit decimal point thus allowing any number of numbers before and after the decimal. If no explicit decimal point is provided then 3 characters before and 6 characters after an implied decimal point are assumed. Please note, however, that the maximum number of decimal places held will be 6, and any rate will thus be truncated at 6 places if more than this are entered after the decimal point. Please also see the Decimal Places notes within the Detail section. See note 3.|
+|COST_CENTRE_1_CODE|C01C|X(3)|1366,3|Please see notes at the beginning of the layout.|
+|COST_CENTRE_1_QUANTITY|C01Q|S9(11)|1369,12|See note 3.|
+|COST_CENTRE_1_VALUE|C01V|S9(11)v9(2)|1381,14|See note 3.|
+|COST_CENTRE_2_CODE|C02C|X(3)|1395,3||
+|COST_CENTRE_2_QUANTITY|C02Q|S9(11)|1398,12|See note 3.|
+|COST_CENTRE_2_VALUE|C02V|S9(11)v9(2)|1410,14|See note 3.|
+|COST_CENTRE_3_CODE|C03C|X(3)|1424,3||
+|COST_CENTRE_3_QUANTITY|C03Q|S9(11)|1427,12|See note 3.|
+|COST_CENTRE_3_VALUE|C03V|S9(11)|v9(2)|1439,14|See note 3.|
+|COST_CENTRE_4_CODE|C04C|X(3)|1453,3||
+|COST_CENTRE_4_QUANTITY|C04Q|S9(11)|1456,12|See note 3.|
+|COST_CENTRE_4_VALUE|C04V|S9(11)v9(2)|1468,14|See note 3.|
+|COST_CENTRE_5_CODE|C05C|X(3)|1482,3||
+|COST_CENTRE_5_QUANTITY|C05Q|S9(11)|1485,12|See note 3.|
+|COST_CENTRE_5_VALUE|C05V|S9(11)v9(2)|1497,14|See note 3.|
+|COST_CENTRE_6_CODE|C06C|X(3)|1511,3||
+|COST_CENTRE_6_QUANTITY|C06Q|S9(11)|1514,12|See note 3.|
+|COST_CENTRE_6_VALUE|C06V|S9(11)v9(2)|1526,14|See note 3.|
+|COST_CENTRE_7_CODE|C07C|X(3)|1540,3||
+|COST_CENTRE_7_QUANTITY|C07Q|S9(11)|1543,12|See note 3.|
+|COST_CENTRE_7_VALUE|C07V|S9(11)v9(2)|1555,14|See note 3.|
+|COST_CENTRE_8_CODE|C08C|X(3)|1569,3||
+|COST_CENTRE_8_QUANTITY|C08Q|S9(11)|1572,12|See note 3.|
+|COST_CENTRE_8_VALUE|C08V|S9(11)v9(2)|1584,14|See note 3.|
+|COST_CENTRE_9_CODE|C09C|X(3)|1598,3||
+|COST_CENTRE_9_QUANTITY|C09Q|S9(11)|1601,12|See note 3.|
+|COST_CENTRE_9_VALUE|C09V|S9(11)v9(2)|1613,14|See note 3.|
+|COST_CENTRE_10_CODE|C10C|X(3)|1627,3||
+|COST_CENTRE_10_QUANTITY|C10Q|S9(11)|1630,12|See note 3.|
+|COST_CENTRE_10_VALUE|C10V|S9(11)v9(2)|1642,14|See note 3.|
+|MARK_TRADE_INDICATOR|MARK|X(1)|1656,1| In version 6.2 the indicator was extended for cash pool trades: For Cash and Non-Cash trades: ’Y' = Trade is markable. 'N' = Trade is nonmarkable.  For Cash Pool trades: 'B' = Trade is markable for both Fee marks (Trade activities) and Collateral marks (Bulk Cash Pool activities). 'C' = Trade is markable for collateral marks only (Bulk Cash Pool activities).  'F' = Trade is markable for Fee marks only (Trade activities). 'N' = Trade is non-markable. In cases where a value of ‘Y’ is provided for Cash Pool trades, this is converted to the default Mark Trade Indicator held on the counterparty, or to the value on the Cash Pool Mark Trade Default system parameter if the counterparty field is not populated. |
+|DEALER_IDENTIFIER|DEAL|X(8)|1657,8||
+|MATCHED_INVESTMENT|MTCH|X(1)|1665,1|Y/N. For Lenders Module with Cash Management.|
+|TRADE_TIME|TDTM|X(5)|1666,5|Format of HH:MM.|
+|INTERNAL_COMMENTS_SECOND_LINE|INC2|X(20)|1671,20||
+|EXTERNAL_COMMENTS_SECOND_LINE|EXC2|X(50)|1691,50||
+|EXTENDED_QUANTITY|EQTY|S9(11)v9(2)|1741,14|2 implied decimals. See note 3.|
+|EXTENDED_LOAN_PRICE|ELPR|S9(9)v9(7)|1755,17|7 implied decimals. See note 3.|
+|COST_CENTRE_1_EXTENDED_QUANTITY|C01X|S9(11)v9(2)|1772,14|See note 3.|
+|COST_CENTRE_2_EXTENDED_QUANTITY_C02X||S9(11)v9(2)|1786,14|See note 3. |
+|COST_CENTRE_3_EXTENDED_QUANTITY_C03X||S9(11)v9(2)|1800,14|See note 3. |
+|COST_CENTRE_4_EXTENDED_QUANTITY_C04X||S9(11)v9(2)|1814,14|See note 3. |
+|COST_CENTRE_5_EXTENDED_QUANTITY_C05X||S9(11)v9(2)|1828,14|See note 3. |
+|COST_CENTRE_6_EXTENDED_QUANTITY_C06X||S9(11)v9(2)|1842,14|See note 3. |
+|COST_CENTRE_7_EXTENDED_QUANTITY_C07X||S9(11)v9(2)|1856,14|See note 3. |
+|COST_CENTRE_8_EXTENDED_QUANTITY_C08X||S9(11)v9(2)|1870,14|See note 3. |
+|COST_CENTRE_9_EXTENDED_QUANTITY_C09X||S9(11)v9(2)|1884,14|See note 3. |
+|COST_CENTRE_10_EXTENDED_QUANTITY_C10X||S9(11)v9(2)|1898,14|See note 3. |
+|RETURN_UPDATE_FLAG_RTUD||X(1)|1912,1|‘C’, ‘U’ or space. This flag is used to determine how a return record is treated. If this is a space then the return fields will be defaulted from the original trade details. If ‘C’ then all the fields in the Trade Upload file will be used for the return, whether they are populated or not. If ‘U’ then only the fields that are populated in the Trade Upload record will be utilised for the return and all other data will be defaulted from the original trade. |
+|COMPARE_DIVIDEND_TRACKING_CDVT||X(1)|1913,1|Y/N. Used for Loanet Contract Compare details on US Domestic Trades. Defaulted from the Counterparty Database if not present for a new trade. |
+|COMPARE_MARK_ELIGIBLE_CMKE||X(1)|1914,1|Y/N. Used for Loanet Contract Compare details on US Domestic Trades. Defaulted from the Counterparty Database if not present for a new trade. |
+|LENDER_MODULE_TRADE_LDTD||X(1)|1915,1|This indicator specifies how a new trade with funds, a fund re-allocation or a return with funds record is to be processed: 1–Automatic Allocation, 2-Manual Allocation With Validation or 3-Manual Allocation No Validation. This should be left blank for a non-fund trade, if set to 1 then any fund level details supplied in the file will be ignored. Please note that the option of 1 for Auto Allocation is not applicable to Lender Holds. If set to 2 or 3 the record will be rejected if the fund details are not supplied. If null, the trade is created without funds. Cannot be null for a fund re-allocation, either 2 or 3 should be present. |
+|FUND_CODE_1_FU01||X(6)|1916,6|Please see notes at the beginning of the layout. |
+|FUND_CROSS_REFERENCE_1_FX01||X(10)|1922,10| |
+|FUND_LOCATION_1_FL01||X(3)|1932,3| |
+|FUND_LOCATION_CROSS_REFERENCE_1_FC01||X(10)|1935,10| |
+|FUND_1_QUANTITY_FQ01||S9(11)v9(2)|1945,14|See note 3. |
+|FUND_1_VALUE_FV01||S9(11)v9(2)|1959,14|See note 3. |
+|FUND_CODE_2_FU02||X(6)|1973,6| |
+|FUND_CROSS_REFERENCE_2_FX02||X(10)|1979,10| |
+|FUND_LOCATION_2_FL02||X(3)|1989,3| |
+|FUND_LOCATION_CROSS_REFERENCE_2_FC02||X(10)|1992,10| |
+|FUND_2_QUANTITY_FQ02||S9(11)v9(2)|2002,14|See note 3. |
+|FUND_2_VALUE_FV02||S9(11)v9(2)|2016,14|See note 3. |
+|FUND_CODE_3_FU03||X(6)|2030,6| |
+|FUND_CROSS_REFERENCE_3_FX03||X(10)|2036,10| |
+|FUND_LOCATION_3_FL03||X(3)|2046,3| |
+|FUND_LOCATION_CROSS_REFERENCE_3_FC03||X(10)|2049,10| |
+|FUND_3_QUANTITY_FQ03||S9(11)v9(2)|2059,14|See note 3. |
+|FUND_3_VALUE_FV03||S9(11)v9(2)|2073,14|See note 3. |
+|FUND_CODE_4_FU04||X(6)|2087,6| |
+|FUND_CROSS_REFERENCE_4_FX04||X(10)|2093,10| |
+|FUND_LOCATION_4_FL04||X(3)|2103,3| |
+|FUND_LOCATION_CROSS_REFERENCE_4_FC04||X(10)|2106,10| |
+|FUND_4_QUANTITY_FQ04||S9(11)v9(2)|2116,14|See note 3. |
+|FUND_4_VALUE_FV04||S9(11)v9(2)|2130,14|See note 3. |
+|FUND_CODE_5_FU05||X(6)|2144,6| |
+|FUND_CROSS_REFERENCE_5_FX05||X(10)|2150,10| |
+|FUND_LOCATION_5_FL05||X(3)|2160,3| |
+|FUND_LOCATION_CROSS_REFERENCE_5_FC05||X(10)|2163,10| |
+|FUND_5_QUANTITY_FQ05||S9(11)v9(2)|2173,14|See note 3. |
+|FUND_5_VALUE_FV05||S9(11)v9(2)|2187,14|See note 3. |
+|FUND_CODE_6_FU06||X(6)|2201,6| |
+|FUND_CROSS_REFERENCE_6_FX06||X(10)|2207,10| |
+|FUND_LOCATION_6_FL06||X(3)|2217,3| |
+|FUND_LOCATION_CROSS_REFERENCE_6_FC06||X(10)|2220,10| |
+|FUND_6_QUANTITY_FQ06||S9(11)v9(2)|2230,14|See note 3. |
+|FUND_6_VALUE_FV06||S9(11)v9(2)|2244,14|See note 3. |
+|FUND_CODE_7_FU07||X(6)|2258,6| |
+|FUND_CROSS_REFERENCE_7_FX07||X(10)|2264,10| |
+|FUND_LOCATION_7_FL07||X(3)|2274,3| |
+|FUND_LOCATION_CROSS_REFERENCE_7_FC07||X(10)|2277,10| |
+|FUND_7_QUANTITY_FQ07||S9(11)v9(2)|2287,14|See note 3. |
+|FUND_7_VALUE_FV07||S9(11)v9(2)|2301,14|See note 3. |
+|FUND_CODE_8_FU08||X(6)|2315,6| |
+|FUND_CROSS_REFERENCE_8_FX08||X(10)|2321,10| |
+|FUND_LOCATION_8_FL08||X(3)|2331,3| |
+|FUND_LOCATION_CROSS_REFERENCE_8_FC08||X(10)|2334,10| |
+|FUND_8_QUANTITY_FQ08||S9(11)v9(2)|2344,14|See note 3. |
+|FUND_8_VALUE_FV08||S9(11)v9(2)|2358,14|See note 3. |
+|FUND_CODE_9_FU09||X(6)|2372,6| |
+|FUND_CROSS_REFERENCE_9_FX09||X(10)|2378,10| |
+|FUND_LOCATION_9_FL09||X(3)|2388,3| |
+|FUND_LOCATION_CROSS_REFERENCE_9_FC09||X(10)|2391,10| |
+|FUND_9_QUANTITY_FQ09||S9(11)v9(2)|2401,14|See note 3. |
+|FUND_9_VALUE_FV09||S9(11)v9(2)|2415,14|See note 3. |
+|FUND_CODE_10_FU10||X(6)|2429,6| |
+|FUND_CROSS_REFERENCE_10_FX10||X(10)|2435,10| |
+|FUND_LOCATION_10_FL10||X(3)|2445,3| |
+|FUND_LOCATION_CROSS_REFERENCE_10_FC10||X(10)|2448,10| |
+|FUND_10_QUANTITY_FQ10||S9(11)v9(2)|2458,14|See note 3. |
+|FUND_10_VALUE_FV10||S9(11)v9(2)|2472,14|See note 3. |
+|FUND_COST_CENTRE_REALLOCATION_DATE_FADT||9(8)|2486,8|The effective date of the fund/cost centre re-allocation. |
+|INTEREST_RATE_SIGN_INTS||X(1)|2494,1|Can be used in conjunction with the standard format for the Interest Rate field where the rate is 4 figures including a minus sign. Blank or '-' are valid. |
+|AGENCY_REFERENCE_AGRF||X(16)|2495,16|Used for new trades and returns. Can contain Deliver Via Code for trades to be passed to Loanet through GOLIM. An activity narrative that is User Defined and is passed back to the source within the Trade Upload Confirmation file. |
+|TRANSACTION_NARRATIVE_NARR||X(20)|2511,20|A narrative supplied by the user for this transaction and passed back to the source within the Trade Upload Confirmation file. |
+|AUTO_AUTHORISED_AUTH||X(1)|2531,1|Y/N. Allows trade or return to be authorised. If blank, ‘N’ is assumed. Trades or returns that require authorisation will need to have this flag set to ‘Y’ if the Security Bulking fields are also populated. It is also necessary to set as auto authorise (or auto settle) trades or returns if the Suppress Confirm/Instructions flag in 3561,1 is not set to null.  Note that this field is not used for intercompany trades and returns since these cannot be auto authorised. |
+|SECURITY_BULKING_SCBK||X(1)|2532,1|Y/N. Allows a number of records within the file to be accumulated together for the bulking of security settlements. If blank, ‘N’ is assumed. |
+|BULKING_REFERENCE_BKRF||X(2)|2533,2|User defined bulking reference to denote which trades and returns within the file can be bulked together. If blank, and ‘Y’ passed for Security Bulking, then the routine will attempt to automatically bulk by security. Trades and returns that need to be authorised prior to being bulked, will need to have the Authorised flag set to ‘Y’. |
+|COLLATERAL_GROUPING_CODE_CLGP||X(3)|2535,3|Lenders Module only. Used in calculation of availability for non-cash trades and returns, where the ‘Request Collateral Grouping’, <F8>More, <F5>-Add’l Info, System Parameter is set for a Collateral Grouping Code to be required. |
+|CASH_WASH_CURRENCY_WSCU||X(3)|2538,3|Cash Wash currency code, present for non-cash or collateral items if the item is against a cash wash. |
+|CASH_WASH_VALUE_WSVL||S9(11)v9(2)|2541,14|Cash Wash value, present for noncash or collateral items if the item is against a cash wash. See note 3. |
+|NO_OF_FUND_COST_CENTRE_ADDITIONAL_RECORDS_NORE||9(5)|2555,5|The number of fund (type 2) or cost centre (type 3) records to follow. Zero if not applicable. There is no maximum number of records. |
+|NO_OF_USER_DEFINED_FIELD_ADDITIONAL_RECORDS_NOUS||9(5)|2560,5|The number of User Defined field (type 4) records to follow. Zero if not applicable. The current maximum for these fields is 50. |
+|NON_DOLLAR_REPO_TRADE_NDRT||X(1)|2565,1|If this new trade is a Non-Dollar Repo Trade this field should be set to 1 for Repo Trade or the Cash part of a Multi-Collateral Repo and 2 for the Security items on a Multi-Collateral Repo. |
+|COUPON_INTEREST_SCPI||9(12)v9(2)|2566,14|Total Coupon Accrual at Start for Buy/Sell trades only. |
+|END_COUPON_INTEREST_ECPI||9(12)v9(2)|2580,14|Total Coupon Accrual at Term for Buy/Sell trades only. |
+|INVESTMENT_RATE_IVRT||9(3)v9(6)|2594,9|Re-investment rate for Buy/Sell only. |
+|ACCRUAL_VALUE_ACVL||9(12)v9(2)|2603,14|Accrual interest value. |
+|MONTHLY_BILLED_MNBL||X(1)|2617,1|Y/N. Monthly Billed indicator for Repo Accruals Report. |
+|CLEAN_PRICE_CLPR||9(9)v9(6)|2618,15|Price for trade without accrued interest. |
+|RETURN_CASH_CLEARER_CODE_RCCC||X(10)|2633,10|Own Counterparty Clearer details for Cash on the Return leg of a Term Repo. |
+|RETURN_CASH_CLEAR_SWIFT_BIC_RCSB||X(25)|2643,25| |
+|RETURN_CASH_CLEARER_ACCOUNT_NUMBER_RCAN||X(25)|2668,25| |
+|RETURN_CASH_CLEARER_SUBACCOUNT_RCSA||X(25)|2693,25| |
+|RETURN_CASH_CLEARER_ACCOUNT_REFERENCE_RCAR||X(50)|2718,50| |
+|RETURN_CASH_CLEARER_CONTACT_RCCO||X(30)|2768,30| |
+|RETURN_CASH_CLEARER_NAME_RCCN||X(50)|2798,50| |
+|RETURN_SECURITY_CLEARER_CODE_RSCC||X(10)|2848,10|Own Counterparty Clearer details for Security on the Return of a Term Repo. |
+|RETURN_SECURITY_CLEARER_SWIFT_BIC_RSSB||X(25)|2858,25| |
+|RETURN_SECURITY_CLEARER_ACCOUNT_NUMBER_RSAN||X(25)|2883,25| |
+|RETURN_SECURITY_CLEARER_SUBACCOUNT_RSSA||X(25)|2908,25| |
+|RETURN_SECURITY_CLEARER_ACCOUNT_REFERENCE_RSAR||X(50)|2933,50| |
+|RETURN_SECURITY_CLEARER_CONTACT_RSCO||X(30)|2983,30| |
+|RETURN_SECURITY_CLEARER_NAME_RSCN||X(50)|3013,50| |
+|CL_RETURN_CASH_CLEARER_CODE_CRCC||X(10)|3063,10|Counterparty Clearer details for Cash on the Return leg of a Term Repo. |
+|CL_RETURN_CASH_CLEARER_SWIFT_BIC_CRCB||X(25)|3073,25| |
+|CL_RETURN_CASH_CLEARER_ACCOUNT_NUMBER_CRCA||X(25)|3098,25| |
+|CL_RETURN_CASH_CLEARER_SUBACCOUNT_CRCS||X(25)|3123,25| |
+|CL_RETURN_CASH_CLEARER_ACCOUNT_REFERENCE_CRCR||X(50)|3148,50| |
+|CL_RETURN_CASH_CLEARER_CONTACT_CRCO||X(30)|3198,30| |
+|CL_RETURN_CASH_CLEARER_NAME_CRCN||X(50)|3228,50| |
+|CL_RETURN_SECURITY_CLEARER_CODE_CRSC||X(10)|3278,10|Counterparty Clearer details for Security on the Return leg of a Term Repo. |
+|CL_RETURN_SECURITY_CLEARER_SWIFT_BIC_CRSB||X(25)|3288,25| |
+|CL_RETURN_SECURITY_CLEARER_ACCOUNT_NUMBER_CRSA||X(25)|3313,25| |
+|CL_RETURN_SECURITY_CLEARER_SUB_ACCOUNT_CRSS||X(25)|3338,25| |
+|CL_RETURN_SECURITY_CLEARER_ACCOUNT_REFERENCE_CRSR||X(50)|3363,50| |
+|CL_RETURN_SECURITY_CLEARER_CONTACT_CRSO||X(30)|3413,30| |
+|CL_RETURN_SECURITY_CLEARER_NAME_CRSN||X(50)|3443,50| |
+|ROLL_ACCRUAL_INTEREST_RAIN||X(1)|3493,1|Set to ‘Y’ to add the accrued interest into the start value of the new trade or ‘N’ to pay or receive the interest. mandatory for Rollover items. |
+|CREST_PRIORITY_CRPI||9(2)|3494,2|Range from 0 to 90. |
+|CREST_SYSTEM_OF_ORIGIN_CRSY||X(1)|3496,1|Valid codes are S-Stock Exchange, TTradepoint, I-Irish Stock Exchange, LLIFFE or O-Off Exchange. |
+|CREST_NC_CONDITION_CRNC||X(1)|3497,1|Set to ‘Y’ if trade is to never settle in CREST, otherwise set to ‘N’. |
+|CREST_CASH_MOVEMENT_TYPE_CRMV||X(1)|3498,1|Valid codes are A-Standard Payment, C-Commission payment or O-Other payment to third party. |
+|CREST_AGENT_INDICATOR_CRAG||X(1)|3499,1|Valid codes are A-Agent As SRO Member Firm, P-Principal Purchase as SRO Member, S-Principal Sale as SRO Member or N-Not SRO Member Firm. |
+|CREST_DBV_MARGIN_CRDM||9(4)v99|3500,6|This should be set to the DBV Margin percentage where the Consideration differs from the DBV value sought. Required for collateral items only. |
+|CREST_DBV_CONSIDERATION_CRDC||9(14)v9(2)|3506,16|This should be set to the DBV Consideration Value where this differs from the DBV Value sought. Required for collateral items only. |
+|CREST_CONCENTRATION_LIMIT_CRLM||X(1)|3522,1|Set to ‘Y’ if CREST Concentration Limits apply to this DBV item, otherwise set to ‘N’. |
+|CREST_INCLUDE_RATE_CRIN||X(1)|3523,1|Set to ‘Y’ to include rebate rate for matching DBV on repo trades or ‘N’ to exclude. |
+|CREST_MATCHING_CONSIDERATION_CRMT||9(14)v9(2)|3524,16|CREST Matching Consideration exclusive of Loan Margin. For Stock B/L’s only. |
+|CREST_SUPPRESS_REVALUATION_CRRV||X(1)|3540,1|Set to ‘Y’ to suppress CREST revaluation otherwise set to ‘N’. |
+|CREST_BARGAIN_CONDITIONS_CRCD||X(10)|3541,10|Set to 10 x Y/N for ten bargain conditions. |
+|CREST_AUTO_RAISE_PRIORITY_CRRP||X(1)|3551,1|Set to ‘Y’ for Auto Raise Priority, else ‘N’. If ‘Y’, uses default counterparty open and term priorities. |
+|CREST_NEW_PRIORITY_CRNP||9(2)|3552,2|New Priority for Crest Raise Priority, range 0 to 90. Ignored if null and ‘N’ to Auto Raise Priority. |
+|NUMBER_OF_SPLIT_RECORDS_NOSP||9(5)|3554,5|The number of Split (type 5) records to follow. Zero if not applicable. |
+|AMENDMENT_CHANGE_UPDATE_FLAG_AMUF||X(1)|3559,1|Set to ‘Y’ if blank fields present for a trade amendment (Status=A) are to be re-calculated or re-defaulted. Any redefaulted values will be from the Counterparty Database and not from the trade itself. If the amendment is for a settled trade, and there is no default available from the counterparty, then either blank will be used or the upload will fail if the field cannot be blank for a settled trade, e.g. Dealer ID. |
+|CANCEL_PENDING_MARK_CNPM||X(1)|3560,1|Set to ‘Y’ for new return if Pending Marks are to be cancelled if present on a trade when a New Return is posted. |
+|SUPPRESS_CONFIRM_INSTRUCTIONS_SPIN||X(1)|3561,1|May be C, I, B or null. This will suppress the generation of Confirms (C) or Security Settlement Instructions (I) or Both (B) for trades and collateral items and returns. These items need to be set as either Auto Authorised or Auto Settled. |
+|MANDATORY_OWN_CONTRACT_REFERENCE_OCMD||X(1)|3562,1|Set to ‘Y’ if the Own Contract Reference is to be mandatory for new trades. |
+|US_REPO_ACCRUAL_TYPE_DRAT||X(1)|3563,1|M-Marks, R-Returns or B-Both. Only applicable to trade amendments on outstanding trades. |
+|TAXABLE_FLAG_TAXF||X(1)|3564,1|Set to ‘Y’ if the trade is subject to free tax. |
+|MATCHED_INVESTMENT_DEFAULT_CODE_MIVD||X(6)|3565,6|Enter the default Vehicle Code. For Lenders Modules with Cash Management. |
+|AUTHORISED_SECURITY_CANCELS_AUSX||X(1)|3571,1|A-Authorise Cancellation, R-Remove Cancel Message. This field should only be populated for amendments, updates or cancellations of trades or returns. This is only applicable to Auto Authorise and Auto Bulked transactions. |
+|MINIMUM_FEE_TYPE_MFTY||X(1)|3572,1|Minimum Fee Type for new/amended trades, to override any counterparty default. B-Balance, F-Flat Charge or V-Loan Value |
+|MINIMUM_FEE_VALUE_MFVU||9(7)v9(2)|3573,9|Minimum Fee Value as an override to the counterparty default for the Flat Charge or Loan Value Minimum Fee Types for new/amended trades. |
+|MINIMUM_FEE_VALUE_CURRENCY_MFVC||X(3)|3582,3|Minimum Fee Value currency as an override to the counterparty default for the Flat Charge or Loan Value Minimum Fee Types for new/amended trades. |
+|PROHIBIT_DUPLICATE_OWN_CONTRACT_REFS_PDOC||X(1)|3585,1|Set to ‘Y’ to disallow duplicate Own Contract References for new/ amended trades. Null is taken as ‘N’ to allow duplicate Own Contract References. |
+|DBV_CLASS_GROUP_CODE_DBVG||X(3)|3586,3|Only relevant if Own Cpty Security Clearer instructions use a CREST (type 14) Agency Profile code. Item must exist on the DBVGRP file. Mandatory if CREST DBV Group on Collateral parameter set in CREST parameters. |
+|LENDER_ALLOCATION_OVERRIDE_REASON_CODE_AORC||X(3)|3589,3|For use with the Lenders Module only for new trades or reallocations with manual fund allocation. Not mandatory but if populated will be validated against System Control, Control Files Maintenance, Allocation Override Reason Codes. |
+|BULK_CASH_POOL_EXTENDED_REFERENCE_BCPX||X(3)|3592,3|Extended reference to be used when updating the multiple bulk cash pool for this counterparty, borrow/loan and currency on a settlement of a trade or return. Leave null to update the main bulk cash pool. |
+|COLLATERAL_MARGIN_CMGN||9(3)v9(2)|3595,5|Non-Cash Collateral Margin percentage for non-cash trades. If blank then it will be calculated from the counterparty defaults. This cannot be used for a cash pool trade, as the cash pool value is calculated from the cash pool margin on the counterparty, if no cash pool value is supplied in the record. |
+|EXTERNAL_USER_ID_EXUD||X(10)|3600,10|If populated it will be used as the activity user id for the transaction in place of the Batch User Id. If a new/amended trade and the Dealer Id is blank then this field will be used as the Dealer Id if populated. |
+|INVALID_CLEARER_CODE_OVERRIDE_INDICATOR_ICLO||X(1)|3610,1|If set to 'Y' it will allow security and cash clearer codes that are not valid in Global One to be loaded for trades and returns for both own counterparty and counterparty. Blank or 'N' will mean that only valid clearer codes may be uploaded. |
+|WARNING_OVERRIDE_INDICATOR_WAOV||X(1)|3611,1|If set to ‘Y’ then any warnings will be treated as errors, and cause rejections. |
+|MINIMUM_QUANTITY_MINQ||9(12)v9(2)|3612,14|Minimum quantity. Only applicable to new trades. |
+|ROUNDING_QUANTITY_RNDQ||9(12)v9(2)|3626,14|Rounding quantity. Used in conjunction with Minimum Quantity. |
+|LENDER_SETTLEMENT_ID_LNDI||X(12)|3640,12|Lender Settlement Identifier for matching with the trade’s first location code. Used for AutoBorrows only. |
+|ORIGINAL_TERM_DATE_RRTM||X(8)|3652,8|Original Term Date for non-Dollar Repo Rollover. This will allow the term date on a term repo to be amended at the same time as the repo rollover is processed. |
+|LENDER_SPECIAL_LOAN_INDICATOR_LNSP||X(1)|3660,1|Set to ‘Y’ if this lender trade is denoted as a special loan and is not to be included in the calculation of fund credits. |
+|LENDER_CUSTODY_BANK_CODE_LCBK||X(3)|3661,3|For user of the lenders module and with Dividends from Funds switched on. Will be used to select the availability for a specific Custody Bank Code in conjunction with the Dividend percentages for availability only if dividend percentages are blank. |
+|LENDER_CUSTODY_BANK_CROSS_REFERENCE_LCBX||X(10)|3664,10|Custody Bank Cross Reference |
+|LENDER_LOCATION_CODE_LLOC||X(3)|3674,3|For user of the lenders module and with Dividends from Funds switched on. Will be used to select the availability for a specific Location Code in conjunction with the Dividend percentages. Only used if dividend percentages are blank. |
+|LENDER_LOCATION_CROSS_REFERENCE_LLOX||X(10)|3677,10|Location Cross Reference. |
+|ORIGINAL_CURRENT_FACE_INDICATOR_FOR_MORTGAGE_BACK_SECURITIES_MBFT||X(1)|3687,1|‘O’ for Original or ‘C’ for Current face indicator for quantities on MBS securities. This flag will be used to determine whether the upload quantities are original or current face on trades and returns. If this is not populated then the default of ‘O’ for original face is used for an MBS security. |
+|SECURITY_SETTLEMENT_MODE_OVERRIDE_DSMD||X(1)|3688,1|‘Y’ to override the Security Mode default using the mode from the first occurrence of the country of issue and the clearer code on the Counterparty Delivery Instructions. If a mode is not found then ‘ALL’ will be substituted for the country of security. This flag will only be used if the Security Settlement Mode is not included in the file. |
+|CASH_SETTLEMENT_MODE_OVERRIDE_DCMD||X(1)|3689,1|‘Y’ to override the Cash Mode default using the mode from the first occurrence of the currency and the clearer code on the Counterparty Cash Instructions. If a mode is not found then the trade is rejected as ‘ALL’ is not relevant for the currency on cash instructions. |
+|OWN_CASH_AGENCY_CODE_OCAG||X(6)|3690,6|Own Counterparty Cash Clearer Agency Code |
+|OWN_SECURITY_AGENCY_CODE_OSAG||X(6)|3696,6|Own Counterparty Security Clearer Agency Code |
+|COUNTERPARTY_CASH_AGENCY_CODE_CCAG||X(6)|3702,6|Counterparty Cash Clearer Agency Code |
+|COUNTERPARTY_SECURITY_AGENCY_CODE_CSAG||X(6)|3708,6|Counterparty Security Clearer Agency Code |
+|REPO_RETURN_OWN_CASH_AGENCY_CODE_ROCG||X(6)|3714,6|Repo Return Own Counterparty Cash Clearer Agency Code |
+|REPO_RETURN_OWN_SECURITY_AGENCY_CODE_ROSG||X(6)|3720,6|Repo Return Own Counterparty Security Clearer Agency Code |
+|REPO_RETURN_COUNTERPARTY_CASH_AGENCY_CODE_RCCG||X(6)|3726,6|Repo Return Counterparty Cash Clearer Agency Code |
+|REPO_RETURN_COUNTERPARTY_SECURITY_AGENCY_CODE_RCSG||X(6)|3732,6|Repo Return Counterparty Security Clearer Agency Code |
+|PROFIT_CENTRE_CODE_LPCC||X(1)|3738,1|Used for updating the Loanet Profit Centre Code within GOLIM |
+|CREST_TRANSACTION_NUMBER_CTRA||X(16)|3739,16|CREST Transaction Number. Populated from CREST processing wherever the transaction is passed to the Trade Upload. Stored in ITXN<54>. |
+|SECURITY_BULKING_LEVEL_SBKL||X(1)|3755,1|Indicates the level at which security bulks are to be created.  ‘C’ = Counterparty level ‘M’ = Cpty Major level ‘R’ = Cpty Relationship (General) level Null value means ‘M’. |
+|EXTENDED_NET_DIVIDEND_PERCENTAGE_EDIV||9(3)v9(6)|3766,9|Between zero and 999999999. Will be used in preference to non-Extended Dividend percentage if populated. May be null. |
+|EXTENDED_OVERSEAS_TAX_PERCENTAGE_EOVR||9(3)v9(6)|3775,9|Between zero and 999999999. Will be used in preference to non-Extended Overseas Tax percentage if populated. May be null.. |
+|EXTENDED_DOMESTIC_TAX_PERCENTAGE_EDOM||9(3)v9(6)|3784,9|Between zero and 999999999. Will be used in preference to non-Extended Domestic Tax percentage if populated. May be null. |
+
+TYPE=FUND DETAIL
+|RECORD_TYPE||X(1)|1,1|= 2. For new fund level trades, returns and collateral items, and for fund reallocations. Cost centre re-allocations are not possible here. |
+|RE_ALLOCATIONS_2REA||X(1)|2,1|1-Re-Allocate From, 2-Re-Allocate To, Blank if new trade or return or amended return. The Lender Module Trade flag must also be populated. |
+|FUND_CODE_2FND||X(6)|3,6| |
+|FUND_CROSS_REFERENCE_2FXR||X(10)|9,10| |
+|FUND_LOCATION_2LOC||X(3)|19,3| |
+|FUND_LOCATION_CROSS_REFERENCE_2LXR||X(10)|22,10| |
+|FUND_QUANTITY_2QTY||S9(11)v9(2)|32,14|See note 3. |
+|FUND_VALUE_2VAL||S9(11)v9(2)|46,14|See note 3. |
+|FILLER||X(3734)|60,3734| |
+
+TYPE=COST CENTRE DETAIL
+|RECORD_TYPE||X(1)|1,1|= 3. For Cost Centre level trades and returns. |
+|COST_CENTRE_CODE|3CST|X(3)|2,3| |
+|COST_CENTRE_QUANTITY|3QTY|S9(11)v9(2)|5,14|See note 3. |
+|COST_CENTRE_VALUE|3VAL|S9(11)v9(2)|19,14|See note 3. |
+|INTERCOMPANY_DATABASE_1|3ID1|X(20)|33,20| |
+|INTERCOMPANY_COST_CENTRE_CODE_1|3IC1|X(3)|53,3| |
+|INTERCOMPANY_DATABASE_2|3ID2|X(20)|56,20| |
+|INTERCOMPANY_COST_CENTRE_CODE_2|3IC2|X(3)|76,3| |
+|INTERCOMPANY_DATABASE_3|3ID3|X(20)|79,20| |
+|INTERCOMPANY_COST_CENTRE_CODE_3|3IC3|X(3)|99,3| |
+|INTERCOMPANY_DATABASE_4|3ID4|X(20)|102,20| |
+|INTERCOMPANY_COST_CENTRE_CODE_4|3IC4|X(3)|122,3| RE-ALLOCATIONS 3REA X(1) 125, 1 1-Re-Allocate From, 2-Re-Allocate To, Blank if new trade or return or amended return. |
+|FILLER||X(3668)|126,3668| |
+
+TYPE=USER DEFINED FIELD DETAIL
+|RECORD_TYPE||X(1)|1,1|= 4. For loading user defined fields onto a new trade or collateral item. |
+|USER_FIELD_NUMBER|4UFN|X(3)|2,3|Position of the User Defined field as held on the Systems Parameter file in the database relevant to the trade or collateral item. |
+|USER_FIELD_VALUE|4UFV|X(20)|5,20|The value provided here should match the format type of the field number specified in the previous position above. The format details will be held on the User Defined field table populated in the System Parameters file. |
+|FILLER||X(3769)|25,3769| |
+
+TYPE=SPLIT DETAIL
+|RECORD_TYPE||X(1)|1,1|= 5 |
+|SPLIT_QUANTITY|5QTY|9(12)v9(2)|2,14|Quantity for the new trade. |
+|SPLIT_LOAN_PRICE|5PRC|9(10)v9(7)|16,17|Loan Price for the new trade. |
+|SPLIT_LOAN_VALUE|5VAL|9(12)v9(2)|33,14|Loan Value for the new trade. |
+|SPLIT_PRIORITY|5PRY|9(2)|47,2|CREST Priority for the new trade between 0 and 90. If null, defaulted from Counterparty Database open and term priorities. |
+|SPLIT_RETURN_DUE_DATE|5RDD|9(8)|49,8|CCYYMMDD. CREST Return Due Date for the created pending return for the new trade. |
+|FILLER||X(3737)|57,3737| |
+|RECORD_TYPE||X(1)|1,1|= 6. For loading additional (other) fields onto trades or collateral items. |
+|ADDITIONAL_OTHER_FIELD_VALUE|6A1|X(1000)|2,1000|The values here will be the additional (F6-other) fields that are available in Trade/Collateral input from the F4More screen.  Up to 50 additional fields have been allowed for, each additional field may be up to 20 characters long. Therefore when populating this record they must be set in 20 character blocks. Please see note 2 at the end of the layout for further details. |
+|FILLER||X(2792)|1002,2792| |
+
+TYPE=FOOTER
+|RECORD_TYPE||X(1)|1,1|= 9. |
+|RECORD_COUNT||9(10)|2,10|Please see notes at the start of the layout. This was changed from 6 to 10 characters in version 6.7. |
+|FILLER||X(3781)|12,3781| |

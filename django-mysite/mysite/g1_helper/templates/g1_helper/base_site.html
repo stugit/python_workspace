@@ -1,0 +1,8 @@
+{% extends "mysite/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }} | {{ 'Global One Stuff' }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Global One Stuff' %}</h1>
+{% endblock %}

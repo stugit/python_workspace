@@ -1,0 +1,36 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<body>
+  <div class="container">
+      <h1>Parse GCI String</h1>
+    <form action="/g1helper/parse_gci/" method="post" style="display: inline;">
+        {% csrf_token %}
+        {{ form }}
+
+        <input type="submit" value="submit">
+
+        <table>
+        {% for field in file_fields %}
+            {% if forloop.first %}
+            <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>{{field.index}}</td>
+                <td>{{ field.desc }}</td>
+                <td>{{ field.value }}</td>
+            </tr>
+        {% empty %}
+            <li>No data.</li>
+        {% endfor %}
+        </table>
+
+  </form>
+</div>
+</body>
+{% endblock %}

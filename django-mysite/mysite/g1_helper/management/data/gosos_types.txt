@@ -1,0 +1,20 @@
+|AA|Accrual Activity|
+|AP|Accrual Position|
+|CB|CBLC Reporting|
+|CL|Counterparty Standing Data (Client)|
+|CO|Confirms|
+|CS|Class|
+|CU|Currency|
+|DC|Dividend & Corporate Actions|
+|DE|Delivery|
+|DT|Activity|
+|RT|Fee/Rebate|
+|RA|Recall Activity|
+|RD|Position|
+|RG|Report Groups|
+|RP|Recall Position|
+|SC|Security|
+|SD|Standing Data Changes|
+|SE|Settlement Calendar|
+|TN|Trade Notes|
+|US|User Security|

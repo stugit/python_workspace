@@ -1,0 +1,55 @@
+#  TRADE UPLOAD CONFIRMATION FILE : HEADER 
+#                        DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+
+TYPE=HEADER
+|RECORD TYPE|X(1)|1,1|= 0. |
+|RECORD DATE|9(8)|2,8|CCYYMMDD.|
+|CONFIRMATION FILE NAME|X(18)|10,18|Current file name. |
+|CONFIRMATION FILE TYPE|X(25)|28,25|‘TRADE UPLOAD CONFIRMATION’. 
+|OWN COUNTERPARTY CODE|X(6)|53,6|Current Database Own Counterparty Code. |
+|OWN COUNTERPARTY CROSS REFERENCE|X(10)|59,10|Own Counterparty Interface Cross Reference. |
+|FILLER|X(424)|69,424 ||
+ 
+#  TRADE UPLOAD CONFIRMATION FILE : DETAIL 
+#                        DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+
+TYPE=DETAIL
+|RECORD TYPE|X(1)|1,1|= 1.|
+|GLOBAL ONE TRADE REFERENCE|X(12)|2,12||
+|OWN CONTRACT REFERENCE|X(16)|14,16 ||
+|ERROR MESSAGE CODE|X(2)|30,2||
+|ERROR MESSAGE|X(50)|32,50||
+|SECURITY NAME|X(75)|82,75||
+|CLIENT NAME|X(50)|157,50||
+|ERROR CODE VALUE|X(12)|207,12|The code relating to the error message, i.e. Counterparty code, Security code, Settlement mode etc, if applicable. |
+|TRANSACTION NARRATIVE|X(20)|219,20||
+|SPLIT TRADE REFERENCES|X(120)|239,120|This provides up to 10 new Trade References created as a result of a split processed through the Trade Upload. Each reference will be spaced to 12 characters. The first reference position will also be populated by the new trade reference allocated during the rollover of a repo. This would usually be applicable to CREST trades that are being split to allow partial returns. |
+|MESSAGE STATUS INDICATOR|X(1)|359,1|Set to 1 for successful, 2 for posted but warning or 3 for an error. 
+|COUNTERPARTY CODE|X(6)|360,6|Counterparty code on Trade. |
+|SECURITY CODE|X(12)|366,12|Security code on Trade.|
+|LOAN/RETURN QUANTITY|9(12)v9(2)|378,14|Current Trade or Return Quantity. |
+|LOAN/RETURN VALUE|9(12)v9(12)|392,14|Current Trade or Return Value. |
+|LOAN CURRENCY|X(3)|406,3|Current Trade or Return Currency. |
+|POSTING TYPE|X(3)|409,3|Trade or Return Posting Type. |
+|TRADE/RETURN DATE|X(8)|412,8|Trade or Return Date. |
+|SECURITY SETTLEMENT DATE|X(8)|420,8|Security Settlement Due or Settled Date. |
+|LOAN RATE|S9(2)v9(6)|428,9|Current Trade Interest Rate. |
+|TRANSACTION STATUS|X(1)|437,1|Status in Trade Upload File. |
+|TRANSACTION TYPE|X(1)|438,1|Transaction Type in Trade Upload |
+|EXTENDED ERROR CODE VALUE|X(20)|439,20|Extended error value to accommodate error values greater than 12 characters. All error values will be shown. |
+|LOAN RATE SIGN|X(1)|459,1|Loan Rate sign|
+|PRE-PAY RATE|S9(2)v9(6)|460,9|Pre-Payment Rate. Only relevant for cash non-DVP trades where the cash has been settled and a pre-pay rate entered. |
+|PRE-PAY RATE SIGN|X(1)|469,1|Pre-Payment Rate sign |
+|INVESTMENT RATE|S9(2)v9(6)|470,9|Buy/Sell Investment Rate. Only relevant for Buy/Sell Repo Type trades. |
+|INVESTMENT RATE SIGN|X(1)|479,1|Buy/Sell Investment Rate sign|
+|FINDER/LOC ISSUER RATE|S9(2)v9(6)|480,9|Finder or LOC Collateral Issuer Rate |
+|FINDER/LOC ISSUER RATE SIGN|X(1)|489,1|Finder or LOC Collateral Issuer Rate sign |
+|CUSTODY BANK|X(3)|490,3|Custody|Bank from the first allocated fund. Lender trades only. |
+ 
+#  TRADE UPLOAD CONFIRMATION FILE : FOOTER 
+#  DESCRIPTION 	STRUCT 	POS 	COMMENTS 
+
+TYPE=FOOTER
+|RECORD TYPE|X(1)|1,1|= 9. |
+|DETAIL RECORD COUNT|9(6)|2,6|
+|FILLER|X(485)|8,485|

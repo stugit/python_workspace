@@ -1,0 +1,68 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<body>
+	<h1>What is Securities Lending?</h1>
+	<p>Securities lending is the temporary transfer of securities by one party (the lender, also called the “beneficial owner”) to another (the borrower).</p>
+	<p>The borrower is obligated to return the securities to the lender, either on demand, or at the end of an agreed upon term.</p>
+	<p>For the period of the loan – the lending of securities is collateralized by assets delivered by the borrower to the lender. Collateral is typically either cash or securities.</p>
+
+	<h1>Is Securities Lending Truly Lending?</h1>
+	<p>Title to the loaned securities passes from the lender to the borrower.</p>
+	<p>Dividends and interest are “manufactured” back to the lender. This means that the borrower actually receives dividends and interest from the securities it borrows, but is required to make payments to the lender based on the terms of the securities lending arrangement.</p>
+	<p>Voting rights follow title. The borrower votes all shares it “borrowed” from lender. However, a lender could call the loaned securities if loaned on demand and vote shares.</p>
+
+	<h1>Security Lending Agents</h1>
+	<p>This report is focused on arrangements where the custodian functions as the lending agent. However, this is not the only manner in which securities lending can be facilitated. Prime brokers, other 3rd party agents, and in-house programs can also be used to facilitate securities lending.</p>
+
+	<h1>Typical Securities Lending Asset Flow – Noncash Collateral</h1>
+	<p>The following chart illustrates the typical flow of assets when entering into a securities lending transaction where noncash collateral is provided:</p>
+    <img class="img-responsive" src="{% static "g1_helper/Sec-Lending-Image-1.jpg" %}" alt="Sec-Lending-Image-1">
+	<p>The following chart illustrates the typical flow when terminating the securities loan:</p>
+	<img class="img-responsive" src="{% static "g1_helper/Sec-Lending-Image-2.jpg" %}" alt="Sec-Lending-Image-2">
+	<h1>Typical Securities Lending Asset Flow – Cash Collateral</h1>
+	<p>The following chart illustrates the typical flow of assets when entering into a securities lending transaction where cash collateral is provided:</p>
+	<img class="img-responsive" src="{% static "g1_helper/Sec-Lending-Image-3.jpg" %}" alt="Sec-Lending-Image-3">
+	<p>The following chart illustrates the typical flow when terminating the securities loan:</p>
+	<img class="img-responsive" src="{% static "g1_helper/Sec-Lending-Image-4.jpg" %}" alt="Sec-Lending-Image-4">
+
+	<h1>Why Do Borrowers Borrow Securities?</h1>
+	<p>Borrowers borrow securities for a variety of reasons, including the following:</p>
+    <ul>
+		<li>Prevent settlement fails</li>
+		<li>Cover short sales</li>
+		<li>Hedging</li>
+		<li>Arbitrage</li>
+	</ul>
+
+	<h1>Why Do Lenders Lend Securities?</h1>
+	<p>Lenders typically lend securities to defray custodial costs and to maximize portfolio earnings.</p>
+
+	<h1>How Does a Lender Make Money on Securities Lending?</h1>
+	<p><b>Non-cash Collateral</b> – Typically a fee is agreed upon that takes into account factors such as the following:</p>
+
+    <ul>
+		<li>Supply of the securities being loaned – lower supply generally equates to higher fees</li>
+		<li>Collateral flexibility – borrowers might be willing to pay a higher fee if the lender is more flexible with what securities it will accept as collateral</li>
+	</ul>
+
+	<p><b>Cash Collateral</b> – Lenders typically generate earnings from the difference (spread) between interest rates that are paid and received by the lender. As part of the lending agreement, the lender “manufactures” interest back to the borrower for the cash collateral. The lender then invests the collateral hoping for a return that is higher than the manufactured interest it must pay to the borrower.</p>
+
+	<h1>Lender Risks Relating To Securities Lending</h1>
+	<p>Below are some, but not necessarily all, of the risks lender may be exposed to when participating in securities lending programs.</p>
+
+	<h1><u>Cash Collateral</u></h1>
+	<p><b>Reinvestment Risk</b> – Cash must be reinvested to earn a higher rate of return than the manufactured interest paid from the lender to borrower (creating a positive spread). Higher returns can be obtained by investing in securities with increased credit risk. Because the agent (typically the custodian) is being paid to reinvest the cash without being exposed to downside risk (as the lender typically bears all reinvestment risk), the interests of the lender and the agent can be misaligned. It is important, therefore, that securities lending agreements contain well thought out guidelines and that securities lending programs be monitored.</p>
+
+	<h1><u>Non-Cash Collateral</u></h1>
+	<p>When taking on securities, rather than cash, the lender avoids reinvestment risk. However, the lender is exposed to other risks – particularly relating to risks in selling the collateral in the event of a default by the borrower.</p>
+	<p><b>Selling Delay Risk</b> – If the lender experiences delays in selling the collateral securities, there is risk that the collateral value might decline.</p>
+	<p><b>Mispricing Risk</b> – There is risk if either the securities lent, or those received as collateral, are mispriced – a collateral gap could be created. This happens if the securities lent have been undervalued, or the collateral securities have been overvalued. Less active or illiquid securities generally have higher mispricing risks. Parameters surrounding what securities can be lent and accepted as collateral mitigate mispricing risk.</p>
+	<p><b>Uncorrelated Market Risk</b> – If the securities lent were the same as those received as collateral, they would be perfectly correlated in terms of sensitivity to market movements (and would therefore have no uncorrelated market risk). However, if the securities are quite different, there is the risk that the value of the securities lent rise while the collateral value declines. If there are sudden market movements, this can create a collateralization gap. This gap can be closed by calling additional collateral.</p>
+
+	<h1>Cash and Non-Cash Collateral</h1>
+	<p><b>Failed Trades</b> – Investment managers hired by the investor are typically unaware of what securities have been lent. They are free to sell the securities even though they are out on loan. Normally, the securities on loan are returned before the settlement of the investment manager’s sold securities. It is possible that the securities are not returned in time, resulting in a failed trade.</p>
+	<p>There are many challenges and factors to consider when implementing a securities lending program. We hope that you find the above guidance helpful. If you have any questions on this or other matters, please feel free to contact us.</p>
+</body>
+{% endblock %}

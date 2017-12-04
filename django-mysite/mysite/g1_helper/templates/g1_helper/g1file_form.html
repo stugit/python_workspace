@@ -1,0 +1,15 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<!-- commented
+<link rel="stylesheet" type="text/css" href="{% static 'g1_helper/style.css' %}" />
+-->
+
+<body>
+	<h1>G1 File</h1>
+    <p></p>
+	{{field.filename}}
+	<p></p>
+</body>
+{% endblock %}

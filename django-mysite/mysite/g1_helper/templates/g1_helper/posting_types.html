@@ -1,0 +1,32 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<!-- commented
+<link rel="stylesheet" type="text/css" href="{% static 'g1_helper/style.css' %}" />
+-->
+
+<body>
+	<h1>Posting Type</h1>
+    <p></p>
+	<table class="table table-striped">
+        <thead class="thead-default">
+			<tr>
+				<th>Posting Type</th>
+				<th>BL</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for pt in g1_posting_type_list %}
+			<tr>
+				<td>{{pt.posting_type}}</td>
+				<td>{{pt.bl}}</td>
+				<td>{{pt.description}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<p></p>
+</body>
+{% endblock %}

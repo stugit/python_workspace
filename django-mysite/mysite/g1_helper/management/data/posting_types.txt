@@ -1,0 +1,21 @@
+#|POSTING TYPE|B/L|DESCRIPTION|
+|B|B|Borrow|
+|BBC|B|Bonds Borrowed|
+|BNR|B|Bonus Receive|
+|BUY|B|Buy/Sell Back|
+|CLR|B|Collateral Receive|
+|CSD|B|Cash Deposit (memo only)|
+|ML|B|Money Loan|
+|RPI|B|Reverse Repo|
+|RTR|B|Rights Receive|
+|BLC|L|Bonds Loan|
+|BND|L|Bonus Deliver|
+|CLD|L|Collateral Deliver|
+|CSB|L|Cash Borrow (memo only)|
+|H|L|Lenders Hold|
+|L|L|Loan|
+|LP|L|Principal Loan|
+|MB|L|Money Borrowed|
+|RPO|L|Repo|
+|RTD|L|Rights Deliver|
+|SEL|L|Sell/Buy Back|

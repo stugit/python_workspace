@@ -1,0 +1,66 @@
+TYPE=HEADER
+|RECORD_TYPE||X(1)|1,1|= 0. |
+|INTERFACE_FILE_IDENTIFIER_INTF||X(10)|2,10|Memo information e.g. Settlement. |
+|INTERFACE_ENTITY_DATABASE_INTE||X(6)|12,6|Database Own Counterparty code. |
+|RECORD_DATE_REDT||9(8)|18,8|CCYYMMDD. |
+|MULTIPLE_ACCEPTANCE_RECORDS_ACPT||X(1)|26,1|Set to ‘N’ if Multiple Acceptance Confirmation file records are not required per transaction. If a transaction has more than one error then ‘Y’ or Null will cause all these errors to appear in the Settlement Upload Confirmation file. |
+|LOANS_WITH_PENDING_RETURNS_MKPR||X(1)|27,1|Set to ‘N’ to disallow posting marks to trades with Pending Returns. |
+|DVP_LOANS_WITH_PENDING_RETURNS|MDPR||X(1)|28,1|Set to ‘N’ to disallow posting marks to DVP trades with Pending Returns. |
+|INCLUDE_NON_MARK_TRADES_INMT||X(1)|29,1|Set to ‘N’ to disallow posting marks to Non-Mark trades. |
+|FILLER_||X(308)|30,308| |
+
+TYPE=DETAIL
+|RECORD_TYPE||X(1)|1,1|= 1. |
+|TRADE_REFERENCE|BREF|X(12)|2,12|This should contain the reference for either the individual trade or return being settled or marked, rate changed or unsettled, the Bulk Cash Pool Reference for a Cash Pool Mark, Rate Change or Term Date Change, or the Bulk Reference Id where ‘B’ is set in the Bulk Settlement field. In version 4.8 the Cash Pool Extended Reference was added. This should not be included here as part of the Bulk Cash Pool Reference but populated in the separate Bulk Cash Pool Extended Reference field in position 295,3. |
+|ACTIVITY_TRANSACTION_NUMBER|TREF|X(9)|14,9|This should contain the Pending Mark Identifier if the Settled Indicator is ‘P’. This identifier will need to be ascertained from the Pending Marks details generated for a pending mark batch. In version 4.7 functionality was added so that this could also be used for Activity Deletions. |
+|COUNTERPARTY_CODE|CPTY|X(6)|23,6|Not checked if a Bulk Settlement. |
+|CASH_SETTLEMENT_DATE|CSDT|X(8)|29,8|CCYYMMDD. Only needed if the settlement record is for cash unless it is a Bulk record. In this case it should always be present. Also used for Pending Marks and for Marks processed on trades and Bulk Cash Pools and for Term dates and rate changes entered for Bulk Cash Pools. |
+|CASH_SETTLEMENT_VALUE|CSVL|S9(11).9(2)|37,15|This is the value of the cash settling for a trade or return or the value of a Mark. This needs to be populated where the Settled Indicator shows both or cash are being settled on a nonDVP cash item. For marks or Cash Pool marks this value should incorporate either a minus sign (negative mark) or a zero (positive mark) in the first character of the field. For a Bulk record this should contain the value of the Bulk Settlement whether the Settled Indicator is set to space, ‘S’ or ‘C’ for a non-DVP cash bulk item. See note 1. |
+|CASH_SETTLEMENT_CURRENCY|CSCU|X(3)|52,3|Only required if cash settlement date and value are present. |
+|SECURITY_SETTLEMENT_DATE|SSDT|X(8)|55,8|CCYYMMDD. Only needed if the settlement record is for security unless this is a Bulk record. In this case it should always be present. This should also be present if the rate change is for a trade, rather than for a Bulk Cash Pool, and should contain the effective date. |
+|SECURITY_SETTLEMENT_VALUE|SSVL|S9(11).9(2)|63,15|The settlement value of the trade or return is only required for a Settled Indicator of ‘S’ or space on either a DVP single or bulk item. See note 1. |
+|SECURITY_SETTLEMENT_QUANTITY|QTY|S9(11)|78,12|The quantity is required for a Settled Indicator of ‘S’ or space. If this is a Bulk record it should contain the total quantity, whether the indicator is set to space, ‘S’ or ‘C’. See note 1. |
+|SETTLED_INDICATOR|SIND|X(1)|90,1|A-Auto Mark, B-Bulk Cash Pool Mark and Rate Change, C-Cash Settlement, F-Failed Settlement, Space-Both Security and Cash Settlement or Failed Settlement if FAIL CODE is not null, M-Mark, P-Pending Mark, R-Rate Change, S-Security Settlement, T-Bulk Cash Pool Term Date, UUnsettlement, V-Change No Rollover. Version 4.4 added the Settled Indicator of ‘V’ - Change No Rollover. Version 4.8 added ‘T’ option for Term date change on Bulk Cash Pool. It also added ‘B’ to allow a Mark and Rate Change to be processed on a Bulk Cash Pool together. Version 4.9 prevented the V-Change No Rollover function being used for rate changes on Non-Dollar Repo trades, as the R-Rate Change indicator should now be used. |
+|FAIL_CODE|FCDE|X(3)|91,3|Valid Fail Code. Only used for a SETTLED INDICATOR of ‘F’ or null. If FAIL CODE is null and SETTLED INDICATOR is ‘F’ then will remove any existing fail code. |
+|PRE_PAYMENT_RATE_OR_NEW_RATE|PPRT|S9(2).9(6)|94,10|The Pre-Payment Rate is applicable to cash being settled before the security. Can be negative. The New Rate is applicable to a rate change on a trade or bulk cash pool and is checked against the Rate Warning Level system parameter. Negative rates of more than 100 should be provided with a specific decimal place, e.g. a rate of -102 should be passed as -102.00000 to fit the 10 characters allowed in the field. This field was also changed in Version 4.4 to allow the new rate for a Repo Change No Rollover function. See note 1. |
+|FUND_CODE|FUND|X(6)|104,6|Only used for a Settled Indicator of ‘P’ or Fund Level Cash Pool Marks. |
+|FUND_CROSS_REFERENCE|FXRF|X(10)|110,10|Only used for a Settled Indicator of ‘P’ or Fund Level Cash Pool Marks.. |
+|BULK_SETTLEMENT|BULK|X(1)|120,1|‘B’ to indicate the Trade Reference is a Bulk Reference. Only relevant for settlements and not for marks or pending marks. |
+|EXTENDED_QUANTITY|EQTY|S9(11).9(2)|121,15|Explicit decimal place. See note 1. |
+|CASH_POOL_MARK_NARRATIVE|CPMN|X(30)|136,30|Only updated for cash pool marks. Will be shown on the activity details. |
+|TRANSACTION_NARRATIVE|TXNR|X(20)|166,20|User defined text/reference. This will be shown in the Acceptance file record where this is used but no other enquiry on Global One is available for this narrative. |
+|DIRECT_MARK_ACCRUED_INTEREST|DMAI|S9(11).9(2)|186,15|Value of Accrued Interest for US Dollar type repos. Used to generate Mark Interest Activities as part of the Marks Update. Can be negative for an accrual adjustment. |
+|CANCELLED_INDICATOR|CNID|X(1)|201,1|Set to ‘Y’ to cancel security or cash settlements for trades and returns. |
+|OWN_CONTRACT_REFERENCE|OWRF|X(16)|202,16|Can be used in place of Trade Reference for Settlements (except for bulked items), unsettlements, cancelled settlements, marks (except Bulk Cash Pool), rate changes (except Bulk Cash Pool) and fail codes. In version 4.7 this was also used for Activity Deletions for Marks, Rate Changes and Re-Allocations. |
+|MARK_PRICE|MRKP|9(7).9(7)|218,15|Mark Price must be in the currency of the loan and will be used if the Settled Indicator is set to ‘M’. Please see notes at the beginning of the layout. |
+|REPO_TERM_DATE|RTMD|X(8)|233,8|CCYYMMDD. Only needed for a change to the Term Date for Term Repos during the Change No Rollover process. New returns will be created with this date. Blank will assume current term date. |
+|REPO_EFFECTIVE_DATE|REFD|X(8)|241,8|CCYYMMDD – Only needed for Repo Change No Rollover. Will be used as effective date for rate changes and marks. The Pending Returns, Interest Accrual transactions, Marks and Rate Changes created as a result of posting the transaction will use this date. Blank will assume current Global One date. |
+|REPO_MOVEMENT_VALUE|RMVV|9(12).9(2)|249,15|New value of Repo used in Repo Change No Rollover. This will be used for the value of a new pending return created and to determine if a mark is to be posted. A mark will be calculated using the difference between this value and the current outstanding trade value. If this field is blank and there is a Movement Price (please see below) then the value will be calculated using the price, however if both the price and value are blank then no mark is created. |
+|REPO_ACCRUED_INTEREST|RACI|S9(11).9(2)|264,15|Override Accrued Interest for Term Repo Change No Rollover only. If blank the accrual will be calculated using term date, value and rate. |
+|REPO_MOVEMENT_PRICE|RMVP|9(7).9(7)|279,15|New trade price for Repo Change No Rollover only. If this is blank or if the Movement Value field is populated the new price will be calculated from the value and the quantity of the repo. If populated and the Movement Value is blank then this is used to determine the mark. If the Movement Value and Movement Price fields are both blank then no mark is created. |
+|OVERRIDE_DOLLAR_MARK_ACCRUED_INTEREST|ODMA|X(1)|294,1|If set to ‘Y’ for Dollar Repo marks, and the uploaded Mark Accrued Interest is different to the value which is calculated by Global One, then the mark will be posted. Otherwise the mark will be rejected. |
+|BULK_CASH_POOL_EXTENDED_REFERENCE|BCPX|X(3)|295,3|Used to identify Bulk Cash Pool items with an extended reference when posting marks, rate changes and term date changes. This should be populated in addition to the Trade Reference field if the bulk cash pool to be updated has an extended reference. |
+|EXTERNAL_USER_ID|EXUI|X(10)|298,10|External User ID for Settlement Activity, to be used in place of the Batch User Id if populated. |
+|PARTIAL_SETTLEMENT_INDICATOR|PLSI|X(1)|308,1|Partial Settlement Indicator. Set to Y to specify that this settlement is a partial settlement. |
+|CASH_POOL_VALUE|CPVA|S9(11).9(2)|309,15|Cash Pool Settlement Value. Optional value for cash pool partial settlement for cash pool trades or cash wash collateral only. If not populated will be calculated using Cash Pool margin and settlement value. |
+|CASH_POOL_MARGIN|CPMG|S9(2).9(2)|324,6|Optional cash pool margin for partial settlement. If not populated will be defaulted from counterparty. Will be used to calculate Cash Pool Value if not populated. For Cash Pool nonDVP trades or Cash Wash Collateral only. |
+|NUMBER_OF_ADDITIONAL_RECORDS|NOAR|9(5)|330,5|For partial settlements only. Will contain number of additional fund or cost centre records which are included in record types 2 or 3. |
+|TRADE_CROSS_REFERENCE_POSITION|TCRP|9(3)|335,3|This field is for future use. Where multiple trade cross references are used for the same trade on Global One, an array position may be specified which will mean that the reference is then unique. This position will be used when storing the trade cross references for a new trade. This field can then be used when specifying the position of the correct trade cross reference to be used to identify the trade when posting updates through the Settlement Upload. |
+|CREST_TRANSACTION_NUMBER|CTRA|X(16)|338,16|CREST Transaction Number. Populated from CREST processing, wherever the transaction is passed to the Settlement Upload. Stored in ITXN<54>. |
+|ALLOW_DUPLICATE_MARKS|ADPM|X(1)|354,1|Set to ‘Y’, ‘N’ or null. If ‘Y’ then the duplicate marks checks are not applied. |
+|2LCR|X(10)|21,10|Location cross reference |
+|SETTLEMENT_VALUE|2PSV|S9(11).9(2)|31,15|The partial settlement value of the Collateral item or return Collateral. This is only relevant for Settlement of Collateral as settlement of trades will settle the whole fund value. |
+|SETTLEMENT_QUANTITY|2PSQ|S9(11).9(2)|46,15|Explicit decimal place. This is only relevant for Settlement of Collateral as settlement of trades will settle the whole fund quantity. |
+|FILLER_||X(287)|51,287|Filler |
+
+TYPE=FUND_DETAIL
+|RECORD_TYPE||X(1)|1,1|= 3 |
+|COST_CENTRE_CODE|3CST|X(6)|2,3|Cost Centre Code for collateral or trade partial settlements. Cost Centre must already exist on trade or collateral |
+|SETTLEMENT_VALUE|3VAL|S9(11).9(2)|5,15|The partial settlement value of the Collateral item or return Collateral. This is only relevant for Settlement of Collateral as settlement of trades will settle the whole cost centre value. |
+|SETTLEMENT_QUANTITY|3QTY|S9(11).9(2)|20,15|Explicit decimal place. This is only relevant for settlement of collateral as settlement of trades will settle the whole cost centre quantity. |
+|FILLER||X(293)|45,293|Filler |
+
+TYPE=FOOTER
+|RECORD_TYPE||X(1)|1,1|= 9. |
+|RECORD_COUNT||9(6)|2,6| |
+|FILLER||X(330)|8,330|

@@ -1,0 +1,20 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Welcome to Global One stuff.</h1>
+    </div>
+    <h1>Find out what is:</h1>
+    <p><a href="{% url 'g1_helper:what_is_securities_lending' %}">Securities Lending</a></p>
+    <h1>View some data:</h1>
+    <p><a href="{% url 'g1_helper:posting_types' %}">Posting Types</a></p>
+    <p><a href="{% url 'g1_helper:trade_upload_error_messages' %}">Trade Upload Error Messages</a></p>
+    <p><a href="{% url 'g1_helper:settlement_upload_error_messages' %}">Settlement Upload Error Messages</a></p>
+    <h1>Tools:</h1>
+    <p><a href="{% url 'g1_helper:parse_gci' %}">Parse a GCI string.</a></p>
+</div>
+</body>
+{% endblock %}

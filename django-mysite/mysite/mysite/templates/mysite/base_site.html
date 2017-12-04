@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }} | {{ 'MYSITE' }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'MYSITE' %}</h1>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "mysite/css/dashboard.css" %}" />
+{% endblock %}
+
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard {% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+{% block nav-global %}{% endblock %}

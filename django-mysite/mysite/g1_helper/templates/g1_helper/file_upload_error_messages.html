@@ -1,0 +1,30 @@
+{% extends "g1_helper/base_site.html" %}
+
+{% load static %}
+{% block content %}
+<body>
+	<h1>Upload Error Messages</h1>
+    <p></p>
+	<table class="table table-striped">
+        <thead class="thead-default">
+			<tr>
+				<th>File</th>
+				<th>Code</th>
+				<th>Posted</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for i in g1_file_upload_error_message_list %}
+			<tr>
+				<td>{{i.filename}}</td>
+				<td>{{i.code}}</td>
+				<td>{{i.posted}}</td>
+				<td>{{i.description}}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<p></p>
+</body>
+{% endblock %}
