@@ -43,7 +43,7 @@ deuces==0.2
 dill==0.2.5
 distlib==0.2.5
 distributed==1.19.1
-Django==1.11.7
+Django==1.11.28
 django-admin-bootstrapped==2.5.7
 django-bootstrap3==9.1.0
 django-polls==0.1
