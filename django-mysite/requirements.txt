@@ -142,7 +142,7 @@ pycurl==7.43.0
 pydot==1.2.3
 pydot-ng==1.0.0
 pyflakes==1.6.0
-Pygments==2.2.0
+Pygments==2.7.4
 pygpu==0.6.2
 pylint==1.7.4
 pyodbc==4.0.17
