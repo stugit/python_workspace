@@ -42,7 +42,7 @@ decorator==4.1.2
 deuces==0.2
 dill==0.2.5
 distlib==0.2.5
-distributed==1.19.1
+distributed==2021.10.0
 Django==1.11.7
 django-admin-bootstrapped==2.5.7
 django-bootstrap3==9.1.0
